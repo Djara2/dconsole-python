@@ -1,3 +1,4 @@
+# test comment
 import os
 from dnum import *
 from colors import *
@@ -8,7 +9,7 @@ translator = Translator()
 header = "dconsole  v . 1 . 3"
 os.system("clear")
 stoptext = "Hit ENTER to continue "
-knowncmd = ["translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+knowncmd = ["programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 externalPrograms = ["w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 history = []
 numbers = []
@@ -28,8 +29,9 @@ def logic(enteredList):
     if enteredList[0] in externalPrograms:
         cmd = "python3 {}.py".format(enteredList[0])
         os.system(cmd)
+        print()
         stop = input(stoptext)
-    if not enteredList[0] in knowncmd:
+    if not enteredList[0] in knowncmd and not enteredList[0] in externalPrograms:
         print("Command unrecognized. Type \"help\" for commands")
         stop = input("Hit ENTER to continue ")
         defaultDisplay()
@@ -48,7 +50,7 @@ def logic(enteredList):
     elif enteredList[0] == "programs":
         for x in range(0, len(externalPrograms)):
             print("{}. {}".format(x+1, externalPrograms[x]))
-        stop = input(stoptext)
+        stop = input("\n"+stoptext)
     elif enteredList[0] == "len":
         print()
         print("The length of \"{}\" is {} characters".format(entered[4:], len(entered[4:])))
