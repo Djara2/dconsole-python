@@ -1,0 +1,146 @@
+import os
+from dnum import *
+from colors import *
+from dbin import *
+import pyperclip
+from googletrans import Translator
+translator = Translator()
+header = "dconsole  v . 1 . 3"
+os.system("clear")
+stoptext = "Hit ENTER to continue "
+knowncmd = ["translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+externalPrograms = ["w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+history = []
+numbers = []
+binaries = []
+new = dnum(1, 1, 1)
+def figlet(text):
+    os.system("figlet {}".format(text))
+def defaultDisplay():
+    os.system("clear")
+    os.system("figlet {}".format("dconsole"))
+    print(header+"\n")
+    print("Type \"help\" for options\n")
+
+def logic(enteredList):
+    global knowncmd, history, numbers, binaries, stoptext, new, header, externalPrograms, entered
+    print()
+    if enteredList[0] in externalPrograms:
+        cmd = "python3 {}.py".format(enteredList[0])
+        os.system(cmd)
+        stop = input(stoptext)
+    if not enteredList[0] in knowncmd:
+        print("Command unrecognized. Type \"help\" for commands")
+        stop = input("Hit ENTER to continue ")
+        defaultDisplay()
+    if enteredList[0] == "quit" or enteredList[0] == "exit":
+        exit()
+    elif enteredList[0] == "w3m":
+        if enteredList[1] == "e":
+            # parameter for exact link
+            os.system("w3m {}".format(enteredList[2]))
+        else:
+            buildString = "w3m https://www.bing.com/search?q="
+            for x in range(1, len(enteredList)):
+                buildString+="{}+".format(enteredList[x])
+            os.system("w3m {}".format(buildString))
+        stop = input(stoptext)
+    elif enteredList[0] == "programs":
+        for x in range(0, len(externalPrograms)):
+            print("{}. {}".format(x+1, externalPrograms[x]))
+        stop = input(stoptext)
+    elif enteredList[0] == "len":
+        print()
+        print("The length of \"{}\" is {} characters".format(entered[4:], len(entered[4:])))
+        print()
+        stop = input(stoptext)
+    elif enteredList[0] == "translate":
+        src1 = enteredList[1]
+        dest1 = enteredList[2]
+        start = (len(src1)-1)+(len(dest1)-1)+1
+        content = entered[start:]
+        translator.translate(content, src=src1, dest=dest1)
+        stop = input(stoptext)
+    elif enteredList[0] == "history":
+        os.system("clear")
+        figlet("History")
+        for x in range(0, len(history)):
+            print("{}. {}".format(x+1, history[x]))
+        print()
+        print("Use command \"hre #\" to enter an item from history as input")
+        print()
+        stop = input("Hit ENTER to continue ")
+    elif enteredList[0] == "hre":
+        index = int(enteredList[1])
+        itemToCopy = history[index-1]
+        pyperclip.copy(itemToCopy)
+        print("\"{}\" has been copied to the clipboard. Paste from clipboard or type \"v\" on the input line to automatically paste.".format(itemToCopy))
+        stop = input("Hit ENTER to continue ")
+    elif enteredList[0] == "new":
+        if enteredList[1] == "num":
+            if len(enteredList) != 3:
+                coefficient = float(enteredList[2])
+                value = float(enteredList[3])
+                exponent = float(enteredList[4])
+                if coefficient == value:
+                    coefficient = 1
+                    exponent += 1
+                evaluated = pow(value, exponent)
+                if coefficient != 1:
+                    evaluated = evaluated * coefficient
+                print("Resultant value is {}".format(evaluated))
+                new.coefficient = coefficient
+                new.value = value
+                new.exponent = exponent
+                numbers.append(new)
+                stop = input(stoptext)
+            else:
+                print("Created number: {}".format(float(enteredList[2])))
+                stop = input(stoptext)
+        elif enteredList[1] == "bin":
+            pass
+    elif enteredList[0] == "numbers":
+        os.system("clear")
+        figlet("Numbers")
+        for x in range(0, len(numbers)):
+            bits = numbers[x].evaluate()
+            bits = int(bits)
+            binary = bin(bits)
+            print("{}. {}*{}^{} (#: {}) (b: {})".format(x+1, numbers[x].coefficient, numbers[x].value, numbers[x].exponent, numbers[x].evaluate(), binary))
+        print()
+        stop = input(stoptext)
+    elif enteredList[0] == "v":
+        copied = pyperclip.paste()
+        copiedList = copied.split()
+        print("Entered previously copied command: {}".format(copied))
+        logic(copiedList)
+    elif enteredList[0] == "os" or enteredList[0] == "system":
+        if(enteredList[0] == "os"):
+            print(GREEN)
+            os.system(entered[3:])
+            print(CLEAR)
+            stop = input(stoptext)
+        else:
+            print(GREEN)
+            os.system(entered[7:])
+            print(CLEAR)
+            stop = input(stoptext)
+    
+        
+
+while(True):
+    defaultDisplay()
+    entered = input("> ")
+    entered = entered.lower()
+    enteredList = entered.split()
+    history.append(entered)
+    logic(enteredList)
+    
+
+
+
+
+
+
+
+    
