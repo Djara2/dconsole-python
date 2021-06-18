@@ -1,13 +1,18 @@
 # test comment
 import os
+from rich.console import Console
+from rich.markdown import Markdown
+TITLE = "# dconsole"
+mdTITLE = Markdown(TITLE)
 from dnum import *
 from colors import *
 from dbin import *
 import pyperclip
 from googletrans import Translator
 translator = Translator()
-header = "dconsole  v . 1 . 3"
+header = "dconsole  v . 1 . 4"
 os.system("clear")
+console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
 knowncmd = ["programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 externalPrograms = ["w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
@@ -18,8 +23,10 @@ new = dnum(1, 1, 1)
 def figlet(text):
     os.system("figlet {}".format(text))
 def defaultDisplay():
+    global console, mdTITLE
     os.system("clear")
-    os.system("figlet {}".format("dconsole"))
+    #os.system("figlet {}".format("dconsole")) - no longer used in favor of better looking console.print(markdown) from rich library.
+    console.print(mdTITLE)
     print(header+"\n")
     print("Type \"help\" for options\n")
 

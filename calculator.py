@@ -1,8 +1,12 @@
 import os
 import math
+from rich.console import Console
+from rich.markdown import Markdown
 from colors import *
 os.system("clear")
+MD_TITLE = Markdown("# Calculator")
 history = []
+console = Console()
 inputHistory = []
 outputHistory = []
 knowncmd = ["quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
@@ -97,7 +101,7 @@ def logic(enteredList):
 
 while(True):
     os.system("clear")
-    figlet("Calculator")
+    console.print(MD_TITLE)
     print()
     print("{}add:{} add     {}sub:{}  subtract     {}mult:{} multiply".format(GREEN, CLEAR, GREEN, CLEAR, GREEN, CLEAR))
     print("{}div:{} divide  {}sqrt:{} square root  {}pow: {} power".format(GREEN, CLEAR, GREEN, CLEAR, GREEN, CLEAR))
