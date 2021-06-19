@@ -9,7 +9,7 @@ Functions = Table(title="Functions")
 Functions.add_column("Normal")
 Functions.add_column("Special")
 Functions.add_row("add", "area")
-Functions.add_row("sub", "volume")
+Functions.add_row("sub", "surfacearea")
 Functions.add_row("mult", "volume")
 Functions.add_row("div", "discount")
 Functions.add_row("sqrt", "tip")
@@ -36,6 +36,10 @@ for x in range(0, len(externalPrograms)):
 
 def figlet(text):
     os.system("figlet {}".format(text))
+
+def endof(userlist):
+    end = len(userlist)-1
+    return(end)
 
 def update_historyTable():
     global history, outputHistory, historyTable
@@ -175,7 +179,7 @@ def logic(enteredList):
                     enteredList[1] = input("Shape?: ")
         if enteredList[1] == "circle":
             history[len(history)-1] = "area circle"
-            radius = input("What is the radius of the cirlce? ")
+            radius = input("What is the radius of the circle?: ")
             if radius == "diameter" or radius == "d":
                 radius = input("What is the diameter?: ")
                 radius = float(radius)
@@ -190,14 +194,46 @@ def logic(enteredList):
                 update_historyTable()
                 print()
                 stop = input("Hit ENTER to continue ")
+        elif enteredList[1] == "square":
+            history[len(history)-1] = "area square"
+            dimension = input("What is the dimension of the square?: ")
+            dimension = float(dimension)
+            area = dimension * dimension
+            history[len(history)-1] = "area square dimension = {}".format(dimension)
+            outputHistory.append(area)
+            print("\nThe area is {} units^2".format(area))
+            update_historyTable()
+            print()
+            stop = input("Hit ENTER to continue ")
+        elif enteredList[1] == "rectangle":
+            history[endof(history)] = "area rectangle"
+            base = input("What is the base of the rectangle?: ")
+            height = input("What is the height of the rectangle?: ")
+            base = float(base)
+            height = float(height)
+            area = base * height
+            history[endof(history)] = "area rectange b={} h={}".format(base, height)
+            outputHistory.append(area)
+            update_historyTable()
+            print("\nThe area is {} units^2".format(area))
+            print()
+            stop = input("Hit ENTER to continue ")
+        elif enteredList[1] == "triangle":
+            history[endof(history)] = "area triangle"
+            base = input("What is the base of the triangle?: ")
+            height = input("What is the height of the triangle?: ")
+            base = float(base)
+            height = float(height)
+            area = 0.5 * base * height
+            history[endof(history)] = "area triangle b={} h={}".format(base, height)
+            outputHistory.append(area)
+            update_historyTable()
+            print("\nThe area is {} units^2".format(area))
+            print()
+            stop = input("Hit ENTER to continue ")
+
         
-
-
-
-
-
-
-
+#MAIN FUNCTION
 while(True):
     os.system("clear")
     console.print(MD_TITLE)
