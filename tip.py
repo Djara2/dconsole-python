@@ -1,6 +1,10 @@
 from colors import *
 import os
+from rich.console import Console
+from rich.markdown import Markdown
 os.system("clear")
+console = Console()
+MD_TITLE = Markdown("# Tips Calculator")
 def figlet(text):
     os.system("figlet {}".format(text))
 
@@ -9,7 +13,7 @@ def clear():
 
 while(True):
     clear()
-    figlet("Tips")
+    console.print(MD_TITLE)
     entered = input("Original charge? $")
     if entered != "quit" and entered != "exit":
         entered = float(entered)

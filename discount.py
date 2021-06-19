@@ -1,9 +1,14 @@
 import os
+from rich.table import Table
+from rich.console import Console
+from rich.markdown import Markdown
 from colors import *
+console = Console()
+MD_TITLE = Markdown("# Discount Calculator")
 stoptext = "Hit ENTER to continue "
 while(True):
     os.system("clear")
-    os.system("figlet Discount")
+    console.print(MD_TITLE)
     print("Enter \"help\" for help")
     entered = input("% {}".format(CYAN))
     entered = entered.lower()

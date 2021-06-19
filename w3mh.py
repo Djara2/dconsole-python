@@ -1,8 +1,12 @@
-from figlet import *
+from rich.console import Console
+from rich.table import Table
+from rich.markdown import Markdown
+console = Console()
+MD_TITLE = Markdown("# w3m Manual")
 import os
 from colors import *
 os.system("clear")
-figlet("w3m Manual")
+console.print(MD_TITLE)
 print()
 print("{}q{}: quit (with confirmation)".format(GREEN, CLEAR))
 print()

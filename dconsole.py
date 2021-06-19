@@ -2,6 +2,7 @@
 import os
 from rich.console import Console
 from rich.markdown import Markdown
+from rich.table import Table
 TITLE = "# dconsole"
 mdTITLE = Markdown(TITLE)
 from dnum import *
@@ -10,7 +11,7 @@ from dbin import *
 import pyperclip
 from googletrans import Translator
 translator = Translator()
-header = "dconsole  v . 1 . 4"
+header = "dconsole  v . 1 . 5"
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
@@ -72,11 +73,12 @@ def logic(enteredList):
         stop = input(stoptext)
     elif enteredList[0] == "history":
         os.system("clear")
-        figlet("History")
+        MD_HISTORY_TITLE = Markdown("# History")
+        console.print(MD_HISTORY_TITLE)
         for x in range(0, len(history)):
             print("{}. {}".format(x+1, history[x]))
         print()
-        print("Use command \"hre #\" to enter an item from history as input")
+        console.print("Use command [green]\"hre #\"[/] to enter an item from history as input")
         print()
         stop = input("Hit ENTER to continue ")
     elif enteredList[0] == "hre":
