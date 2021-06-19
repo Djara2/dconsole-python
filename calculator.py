@@ -5,24 +5,56 @@ from rich.markdown import Markdown
 from rich.table import Table
 from colors import *
 os.system("clear")
-functions = Table(title="Functions")
-functions.add_row("add", "sub", "mult", "div")
-functions.add_row("sqrt", "pow", "", "")
+Functions = Table(title="Functions")
+Functions.add_column("Normal")
+Functions.add_column("Special")
+Functions.add_row("add", "area")
+Functions.add_row("sub", "volume")
+Functions.add_row("mult", "volume")
+Functions.add_row("div", "discount")
+Functions.add_row("sqrt", "tip")
+Functions.add_row("pow", "-")
+################
+historyTable = Table(title="History")
+historyTable.add_column("Index")
+historyTable.add_column("User Input")
+historyTable.add_column("Output")
+################
 MD_TITLE = Markdown("# Calculator")
+MD_TITLE_HISTORY = Markdown("# History")
 history = []
+twoDimensionalShapes = ["square", "rectangle", "circle", "triangle"]
+threeDimensionalShapes = ["sphere", "cylinder", "cube", "cuboid", "pyramid"]
 console = Console()
 inputHistory = []
 outputHistory = []
-knowncmd = ["quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+externalPrograms = ["discount", "tip"]
+knowncmd = ["area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+
+for x in range(0, len(externalPrograms)):
+    knowncmd.append(externalPrograms[x])
+
 def figlet(text):
     os.system("figlet {}".format(text))
 
+def update_historyTable():
+    global history, outputHistory, historyTable
+    index = len(history)
+    index = str(index)
+    h_annex = history[len(history)-1]
+    o_annex = outputHistory[len(outputHistory)-1]
+    h_annex = str(h_annex)
+    o_annex = str(o_annex)
+    historyTable.add_row(index, h_annex, o_annex)
+
 def logic(enteredList):
-    global knowncmd, history
+    global knowncmd, history, twoDimensionalShapes, threeDimensionalShapes
     if not enteredList[0] in knowncmd:
         print("{}Error:{} {} is not a valid command.".format(RED, CLEAR, enteredList[0]))
         outputHistory.append("Error (command invalid)")
         stop = input("Hit ENTER to continue ")
+    elif enteredList[0] in externalPrograms:
+        os.system("python3 {}.py".format(enteredList[0]))
     elif enteredList[0] == "add":
         num1 = float(enteredList[1])
         num2 = float(enteredList[2])
@@ -31,6 +63,13 @@ def logic(enteredList):
         print(PINK)
         print("{} + {} = {}".format(num1, num2, result))
         print(CLEAR)
+        index = len(history)
+        index = str(index)
+        h_annex = history[len(history)-1]
+        o_annex = outputHistory[len(outputHistory)-1]
+        h_annex = str(h_annex)
+        o_annex = str(o_annex)
+        historyTable.add_row(index, h_annex, o_annex)
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
     elif enteredList[0] == "quit" or enteredList[0] == "exit":
         exit()
@@ -42,6 +81,13 @@ def logic(enteredList):
         print(PINK)
         print("{} - {} = {}".format(num1, num2, result))
         print(CLEAR)
+        index = len(history)
+        index = str(index)
+        h_annex = history[len(history)-1]
+        o_annex = outputHistory[len(outputHistory)-1]
+        h_annex = str(h_annex)
+        o_annex = str(o_annex)
+        historyTable.add_row(index, h_annex, o_annex)
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
     elif enteredList[0] == "mult":
         num1 = float(enteredList[1])
@@ -51,6 +97,13 @@ def logic(enteredList):
         print(PINK)
         print("{} * {} = {}".format(num1, num2, result))
         print(CLEAR)
+        index = len(history)
+        index = str(index)
+        h_annex = history[len(history)-1]
+        o_annex = outputHistory[len(outputHistory)-1]
+        h_annex = str(h_annex)
+        o_annex = str(o_annex)
+        historyTable.add_row(index, h_annex, o_annex)
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
     elif enteredList[0] == "div":
         num1 = float(enteredList[1])
@@ -61,11 +114,13 @@ def logic(enteredList):
             print(PINK)
             print("{} / {} = {}".format(num1, num2, result))
             print(CLEAR)
+            update_historyTable()
             stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
         else:
             print()
             outputHistory.append("Error (cannot divide by zero)")
             print("{}Error:{} cannot divide by 0.".format(RED, CLEAR))
+            update_historyTable()
             stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
     elif enteredList[0] == "sqrt":
         num1 = float(enteredList[1])
@@ -74,6 +129,7 @@ def logic(enteredList):
         print(PINK)
         print("sqrt({}) = {}".format(num1, result))
         print(CLEAR)
+        update_historyTable()
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
     elif enteredList[0] == "pow":
         num1 = float(enteredList[1])
@@ -85,18 +141,57 @@ def logic(enteredList):
         result = pow(num1, power)
         outputHistory.append(result)
         print(PINK)
+        update_historyTable()
         print("{}^{} = {}".format(num1, power, result))
         print(CLEAR)
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
     elif enteredList[0] == "history":
         os.system("clear")
-        figlet("History")
+        console.print(MD_TITLE_HISTORY)
         outputHistory.append("~")
+        update_historyTable()
         print()
         for x in range(0, len(history)):
             print("{}. {} [Output: {}]".format(x+1, history[x], outputHistory[x]))
         print()
+        console.print(historyTable)
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
+    elif enteredList[0] == "area":
+        shape = ""
+        area = 0
+        if len(enteredList) == 1:
+            shape = input("Shape?: ")
+            if shape in twoDimensionalShapes:
+                enteredList.append(shape)
+            else:
+                enteredList.append("-")
+                while not shape in twoDimensionalShapes:
+                    console.print("[red]\"{}\" is not a valid shape.[/]".format(enteredList[1]))
+                    enteredList[1] = input("Shape?: ")
+        else:
+            if not enteredList[1] in twoDimensionalShapes:
+                while not enteredList[1] in twoDimensionalShapes:
+                    console.print("[red]\"{}\" is not a valid shape.[/]".format(enteredList[1]))
+                    enteredList[1] = input("Shape?: ")
+        if enteredList[1] == "circle":
+            history[len(history)-1] = "area circle"
+            radius = input("What is the radius of the cirlce? ")
+            if radius == "diameter" or radius == "d":
+                radius = input("What is the diameter?: ")
+                radius = float(radius)
+                radius = radius/2
+            else:
+                radius = float(radius)
+                history[len(history)-1] = "area circle r={}".format(radius)
+                area = math.pi * math.pow(radius, 2)
+                print()
+                print("The area is {}".format(area))
+                outputHistory.append(area)
+                update_historyTable()
+                print()
+                stop = input("Hit ENTER to continue ")
+        
+
 
 
 
@@ -107,11 +202,11 @@ while(True):
     os.system("clear")
     console.print(MD_TITLE)
     print()
-    console.print(functions)
+    console.print(Functions)
     print()
-    print("{}add:{} add     {}sub:{}  subtract     {}mult:{} multiply".format(GREEN, CLEAR, GREEN, CLEAR, GREEN, CLEAR))
-    print("{}div:{} divide  {}sqrt:{} square root  {}pow: {} power".format(GREEN, CLEAR, GREEN, CLEAR, GREEN, CLEAR))
-    print()
+    #print("{}add:{} add     {}sub:{}  subtract     {}mult:{} multiply".format(GREEN, CLEAR, GREEN, CLEAR, GREEN, CLEAR))
+    #print("{}div:{} divide  {}sqrt:{} square root  {}pow: {} power".format(GREEN, CLEAR, GREEN, CLEAR, GREEN, CLEAR))
+    #print()
     entered = input("> {}".format(CYAN))
     print(CLEAR)
     entered = entered.lower()
