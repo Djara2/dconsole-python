@@ -15,8 +15,8 @@ header = "dconsole  v . 1 . 5"
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
-knowncmd = ["programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
-externalPrograms = ["w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+knowncmd = ["htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+externalPrograms = ["htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 history = []
 numbers = []
 binaries = []
@@ -142,7 +142,8 @@ def logic(enteredList):
 while(True):
     defaultDisplay()
     entered = input("> ")
-    entered = entered.lower()
+    if entered != "htmlBuilder":
+        entered = entered.lower()
     enteredList = entered.split()
     history.append(entered)
     logic(enteredList)
