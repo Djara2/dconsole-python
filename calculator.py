@@ -52,20 +52,28 @@ def update_historyTable():
     historyTable.add_row(index, h_annex, o_annex)
 
 def logic(enteredList):
-    global knowncmd, history, twoDimensionalShapes, threeDimensionalShapes
+    global entered, knowncmd, history, twoDimensionalShapes, threeDimensionalShapes
+    
     if not enteredList[0] in knowncmd:
         print("{}Error:{} {} is not a valid command.".format(RED, CLEAR, enteredList[0]))
         outputHistory.append("Error (command invalid)")
         stop = input("Hit ENTER to continue ")
+    
     elif enteredList[0] in externalPrograms:
         os.system("python3 {}.py".format(enteredList[0]))
+    
     elif enteredList[0] == "add":
-        num1 = float(enteredList[1])
-        num2 = float(enteredList[2])
-        result = num1 + num2
-        outputHistory.append(result)
+        result = float(enteredList[1])
         print(PINK)
-        print("{} + {} = {}".format(num1, num2, result))
+        for x in range(2, len(enteredList)):
+            result += float(enteredList[x])
+        print("The sum of ", end = "")
+        for x in range(2, len(enteredList)):
+            if x != len(enteredList)-1:
+                print("{} + ".format(enteredList[x]), end = "")
+            else:
+                print("{} is {}".format(enteredList[x], result))
+        outputHistory.append(result)
         print(CLEAR)
         index = len(history)
         index = str(index)
@@ -75,15 +83,22 @@ def logic(enteredList):
         o_annex = str(o_annex)
         historyTable.add_row(index, h_annex, o_annex)
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
+    
     elif enteredList[0] == "quit" or enteredList[0] == "exit":
         exit()
+    
     elif enteredList[0] == "sub":
-        num1 = float(enteredList[1])
-        num2 = float(enteredList[2])
-        result = num1 - num2
+        result = float(enteredList[1])
+        for x in range(2, len(enteredList)):
+            result -= float(enteredList[x])
         outputHistory.append(result)
         print(PINK)
-        print("{} - {} = {}".format(num1, num2, result))
+        print("The difference of ", end = "")
+        for x in range(1, len(enteredList)):
+            if x != len(enteredList)-1:
+                print("{} - ".format(enteredList[x]), end = "")
+            else:
+                print("{} is {}".format(enteredList[x], result))
         print(CLEAR)
         index = len(history)
         index = str(index)
@@ -93,13 +108,19 @@ def logic(enteredList):
         o_annex = str(o_annex)
         historyTable.add_row(index, h_annex, o_annex)
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
+    
     elif enteredList[0] == "mult":
-        num1 = float(enteredList[1])
-        num2 = float(enteredList[2])
-        result = num1 * num2
+        result = 1
+        for x in range(1, len(enteredList)):
+            result *= float(enteredList[x])
         outputHistory.append(result)
         print(PINK)
-        print("{} * {} = {}".format(num1, num2, result))
+        print("The product of ", end = "")
+        for x in range(1, len(enteredList)):
+            if x != len(enteredList)-1:
+                print("{} * ".format(enteredList[x]), end = "")
+            else:
+                print("{} is {}".format(enteredList[x], result))
         print(CLEAR)
         index = len(history)
         index = str(index)
@@ -109,23 +130,30 @@ def logic(enteredList):
         o_annex = str(o_annex)
         historyTable.add_row(index, h_annex, o_annex)
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
+    
     elif enteredList[0] == "div":
-        num1 = float(enteredList[1])
-        num2 = float(enteredList[2])
-        if num2 != 0:
-            result = num1/num2
+        result = float(enteredList[1])
+        for x in range(2, len(enteredList)):
+            if float(enteredList[x]) != 0:
+                result/=float(enteredList[x])
+            else:
+                print()
+                outputHistory.append("Error (cannot divide by zero)")
+                print("{}Error:{} cannot divide by 0.".format(RED, CLEAR))
+                update_historyTable()
+                stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
             outputHistory.append(result)
             print(PINK)
-            print("{} / {} = {}".format(num1, num2, result))
+            print("The quotient of ", end = "")
+            for x in range(1, len(enteredList)):
+                if x != len(enteredList)-1:
+                    print("{} / ".format(enteredList[x]), end = "")
+                else:
+                    print("{} is {}".format(enteredList[x], result))
             print(CLEAR)
             update_historyTable()
             stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
-        else:
-            print()
-            outputHistory.append("Error (cannot divide by zero)")
-            print("{}Error:{} cannot divide by 0.".format(RED, CLEAR))
-            update_historyTable()
-            stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
+    
     elif enteredList[0] == "sqrt":
         num1 = float(enteredList[1])
         result = math.sqrt(num1)
@@ -135,6 +163,7 @@ def logic(enteredList):
         print(CLEAR)
         update_historyTable()
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
+    
     elif enteredList[0] == "pow":
         num1 = float(enteredList[1])
         if enteredList[2] != "f":
@@ -149,6 +178,7 @@ def logic(enteredList):
         print("{}^{} = {}".format(num1, power, result))
         print(CLEAR)
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
+    
     elif enteredList[0] == "history":
         os.system("clear")
         console.print(MD_TITLE_HISTORY)
@@ -160,6 +190,7 @@ def logic(enteredList):
         print()
         console.print(historyTable)
         stop = input("Hit {}ENTER{} to continue ".format(GREEN, CLEAR))
+    
     elif enteredList[0] == "area":
         shape = ""
         area = 0
