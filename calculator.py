@@ -28,8 +28,8 @@ threeDimensionalShapes = ["sphere", "cylinder", "cube", "cuboid", "pyramid"]
 console = Console()
 inputHistory = []
 outputHistory = []
-externalPrograms = ["discount", "tip"]
-knowncmd = ["area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+externalPrograms = ["discount", "tip", "bt"]
+knowncmd = ["choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
 
 for x in range(0, len(externalPrograms)):
     knowncmd.append(externalPrograms[x])
@@ -40,6 +40,12 @@ def figlet(text):
 def endof(userlist):
     end = len(userlist)-1
     return(end)
+
+def factorial(x):
+    if x > 1:
+        return(x*factorial(x-1))
+    else:
+        return(1)
 
 def update_historyTable():
     global history, outputHistory, historyTable
@@ -61,7 +67,35 @@ def logic(enteredList):
     
     elif enteredList[0] in externalPrograms:
         os.system("python3 {}.py".format(enteredList[0]))
-    
+        outputHistory.append("opened {}".format(enteredList[0]))
+        update_historyTable()
+    elif enteredList[0] == "choose":
+        if(len(enteredList) != 1):
+            n = enteredList[1]
+            n = int(n)
+            r = enteredList[2]
+            r = int(r)
+            num = factorial(n)
+            r_factorial = factorial(r)
+            n_sub_r = n - r
+            n_sub_r_factorial = factorial(n_sub_r)
+            den = r_factorial * n_sub_r_factorial
+            result = num/den
+            outputHistory.append(result)
+            update_historyTable()
+            print("Result: {}".format(result))
+        else:
+            console.print("[bold red]Error:[/] you did not provide parameters. Try format \"choose n r\"")
+        stop = input("Hit ENTER to continue ")
+
+
+    elif enteredList[0] == "factorial":
+        result = factorial(int(enteredList[1]))
+        print("Result: {}".format(result))
+        outputHistory.append(result)
+        update_historyTable()
+        stop = input("Hit ENTER to continue ")
+
     elif enteredList[0] == "add":
         result = float(enteredList[1])
         print(PINK)
