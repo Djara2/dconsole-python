@@ -11,12 +11,12 @@ from dbin import *
 import pyperclip
 from googletrans import Translator
 translator = Translator()
-header = "dconsole  v . 1 . 7"
+header = "dconsole  v . 1 . 8"
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
-knowncmd = ["binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
-externalPrograms = ["bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+knowncmd = ["mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+externalPrograms = ["mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 history = []
 numbers = []
 binaries = []

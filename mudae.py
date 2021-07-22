@@ -33,7 +33,8 @@ while True:
         pyautogui.write("$dk")
         pyautogui.press("enter")
     elif entered == "b" or entered == "start":
-        pyautogui.hotkey("alt", "tab")
+        print("Starting in 5 seconds")
+        time.sleep(5)
         pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])
         pyautogui.click()
         for x in range(1, 15):
