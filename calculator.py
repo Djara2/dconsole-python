@@ -50,17 +50,16 @@ def factorial(x):
 def sum(arg, lower, upper):
     coefficient = 1
     indexOfVar = 0
-    if "x" in arg: #if the sum has a variable in it
+    if "x" or "k" or "n" in arg: #if the sum has a variable in it
         for x in range(0, len(arg)):
-            if arg[x] == "x":
+            if arg[x] == "x" or arg[x] == "k" or arg[x] == "n":
                 indexOfVar = x
                 break
         coefficient = arg[0:indexOfVar]
         coefficient = int(coefficient)
-        print("Coefficient: {}".format(coefficient))
     else:
         # this is the case wherein it is the sum of just a constant
-        coefficent = 1
+        coefficent = int(arg)
     # NOW COEFFICIENT IS KNOWN
 
     # find the power of the variable
@@ -73,12 +72,18 @@ def sum(arg, lower, upper):
         power = arg[indexOfCaret+1:len(arg)]
         power = int(power)
     else: #case - there is no power ( power of 1 )
-        power = 1
+        if "x" or "k" or "n" in arg:
+            power = 1
+        else:
+            power = -1 # fix so that summation of just a constant value will work
     # NOW POWER IS KNOWN
     result = 0
     num = 0
     den = 0
     # sum algorithm
+    if power == -1:
+        for x in range(lower, upper+1):
+            result += coefficient
     if power == 1:
         if lower == 1:
             result = upper * (upper+1)
@@ -121,7 +126,13 @@ def sum(arg, lower, upper):
     return(result)
 
 
-
+def generateSumTable(fList, rList):
+    sumTable = Table(title="Summation")
+    sumTable.add_column("Function")
+    sumTable.add_column("Result", style="green")
+    for x in range(0, len(fList)):
+        sumTable.add_row(str(fList[x]), str(rList[x]))
+    return(sumTable)
 
 def update_historyTable():
     global history, outputHistory, historyTable
@@ -178,15 +189,28 @@ def logic(enteredList):
         lowerBound = int(lowerBound)
         upperBound = int(upperBound)
         function = input("Function: ")
-        functionList = function.split("+")
+        history[len(history)-1]="sum {} from {} to {}".format(function, lowerBound, upperBound)
+        if "+" in function:
+            functionList = function.split("+")
+        else:
+            functionList = function
         returnList = []
-        for x in range(0, len(functionList)):
-            returnList.append(sum(functionList[x], lowerBound, upperBound))
-        for y in range(0, len(functionList)):
-            print("Return for {}: {}".format(functionList[y], returnList[y]))
-
-
-
+        totalSum = 0
+        if function != functionList:
+            for x in range(0, len(functionList)):
+                returnList.append(sum(functionList[x], lowerBound, upperBound))
+            for y in range(0, len(functionList)):
+                # print("Return for {}: {}".format(functionList[y], returnList[y]))
+                totalSum+=returnList[y]
+            print()
+            console.print(generateSumTable(functionList, returnList))
+            print("\nSum of {}: {}".format(function, totalSum))
+        else:
+            for x in range(lowerBound, upperBound+1):
+                totalSum += int(function)
+            print("Sum of {} from {} to {}: {}".format(function, lowerBound, upperBound, totalSum))
+        outputHistory.append(totalSum)
+        update_historyTable()
         stop = input("Hit ENTER to continue ")
 
     elif enteredList[0] == "add":
@@ -396,7 +420,7 @@ while(True):
     os.system("clear")
     console.print(MD_TITLE)
     print()
-    console.print(Functions)
+    console.print(Functions, historyTable)
     print()
     #print("{}add:{} add     {}sub:{}  subtract     {}mult:{} multiply".format(GREEN, CLEAR, GREEN, CLEAR, GREEN, CLEAR))
     #print("{}div:{} divide  {}sqrt:{} square root  {}pow: {} power".format(GREEN, CLEAR, GREEN, CLEAR, GREEN, CLEAR))
