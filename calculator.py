@@ -29,7 +29,7 @@ console = Console()
 inputHistory = []
 outputHistory = []
 externalPrograms = ["discount", "tip", "bt"]
-knowncmd = ["choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+knowncmd = ["sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
 
 for x in range(0, len(externalPrograms)):
     knowncmd.append(externalPrograms[x])
@@ -46,6 +46,82 @@ def factorial(x):
         return(x*factorial(x-1))
     else:
         return(1)
+
+def sum(arg, lower, upper):
+    coefficient = 1
+    indexOfVar = 0
+    if "x" in arg: #if the sum has a variable in it
+        for x in range(0, len(arg)):
+            if arg[x] == "x":
+                indexOfVar = x
+                break
+        coefficient = arg[0:indexOfVar]
+        coefficient = int(coefficient)
+        print("Coefficient: {}".format(coefficient))
+    else:
+        # this is the case wherein it is the sum of just a constant
+        coefficent = 1
+    # NOW COEFFICIENT IS KNOWN
+
+    # find the power of the variable
+    if "^" in arg:
+        indexOfCaret = 0
+        for x in range(indexOfVar, len(arg)):
+            if arg[x] == "^":
+                indexOfCaret = x
+                break
+        power = arg[indexOfCaret+1:len(arg)]
+        power = int(power)
+    else: #case - there is no power ( power of 1 )
+        power = 1
+    # NOW POWER IS KNOWN
+    result = 0
+    num = 0
+    den = 0
+    # sum algorithm
+    if power == 1:
+        if lower == 1:
+            result = upper * (upper+1)
+            result = result/2
+            result = result * coefficient
+        else:
+            return(-1) # do later
+    elif power == 2:
+        if lower == 1:
+            den = 6
+            num = upper * (upper+1) * ((2*upper)+1)
+            result = num/den
+            result *= coefficient
+        else:
+            return(-1)
+    elif power == 3:
+        if lower == 1:
+            den = 4
+            upper_squared = pow(upper, 2)
+            upper_plus_one_squared = pow(upper+1, 2)
+            num = upper_squared * upper_plus_one_squared
+            result = num/den
+            result *= coefficient
+        else:
+            return(-1)
+    elif power == 4:
+        if lower == 1:
+            den = 30
+            three_times_var_squared = 3 * pow(upper, 2)
+            # do later 
+            result = -1
+        else:
+            return(-1)
+    elif power == 5:
+        # do later
+        return(-1)
+    else:
+        # power too large for summation shortcut
+        return(-1) 
+    return(result)
+
+
+
 
 def update_historyTable():
     global history, outputHistory, historyTable
@@ -94,6 +170,23 @@ def logic(enteredList):
         print("Result: {}".format(result))
         outputHistory.append(result)
         update_historyTable()
+        stop = input("Hit ENTER to continue ")
+
+    elif enteredList[0] == "sum":
+        lowerBound = input("Lower bound (will break if not 1 for now): ")
+        upperBound = input("Upper bound: ")
+        lowerBound = int(lowerBound)
+        upperBound = int(upperBound)
+        function = input("Function: ")
+        functionList = function.split("+")
+        returnList = []
+        for x in range(0, len(functionList)):
+            returnList.append(sum(functionList[x], lowerBound, upperBound))
+        for y in range(0, len(functionList)):
+            print("Return for {}: {}".format(functionList[y], returnList[y]))
+
+
+
         stop = input("Hit ENTER to continue ")
 
     elif enteredList[0] == "add":
