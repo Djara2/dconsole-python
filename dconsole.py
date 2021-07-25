@@ -11,24 +11,28 @@ from dbin import *
 import pyperclip
 from googletrans import Translator
 translator = Translator()
-header = "dconsole  v . 1 . 8"
+header = "version 1 . 81"
+header2 = "last updated: 07/25/2021"
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
-knowncmd = ["mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+knowncmd = ["h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 externalPrograms = ["mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 history = []
 numbers = []
 binaries = []
 new = dnum(1, 1, 1)
+
 def figlet(text):
     os.system("figlet {}".format(text))
+
 def defaultDisplay():
     global console, mdTITLE
     os.system("clear")
     #os.system("figlet {}".format("dconsole")) - no longer used in favor of better looking console.print(markdown) from rich library.
     console.print(mdTITLE)
-    print(header+"\n")
+    print(header)
+    print(header2+"\n")
     print("Type \"help\" for options\n")
 
 def logic(enteredList):
@@ -71,7 +75,7 @@ def logic(enteredList):
         content = entered[start:]
         translator.translate(content, src=src1, dest=dest1)
         stop = input(stoptext)
-    elif enteredList[0] == "history":
+    elif enteredList[0] == "history" or enteredList[0] == "h":
         os.system("clear")
         MD_HISTORY_TITLE = Markdown("# History")
         console.print(MD_HISTORY_TITLE)
@@ -120,11 +124,13 @@ def logic(enteredList):
             print("{}. {}*{}^{} (#: {}) (b: {})".format(x+1, numbers[x].coefficient, numbers[x].value, numbers[x].exponent, numbers[x].evaluate(), binary))
         print()
         stop = input(stoptext)
+
     elif enteredList[0] == "v":
         copied = pyperclip.paste()
         copiedList = copied.split()
         print("Entered previously copied command: {}".format(copied))
         logic(copiedList)
+
     elif enteredList[0] == "os" or enteredList[0] == "system":
         if(enteredList[0] == "os"):
             print(GREEN)
@@ -144,6 +150,8 @@ while(True):
     entered = input("> ")
     if entered != "htmlBuilder":
         entered = entered.lower()
+    if entered == "calc":
+        entered = "calculator"
     enteredList = entered.split()
     history.append(entered)
     logic(enteredList)

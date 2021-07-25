@@ -50,18 +50,23 @@ def factorial(x):
 def sum(arg, lower, upper):
     coefficient = 1
     indexOfVar = 0
-    if "x" or "k" or "n" in arg: #if the sum has a variable in it
-        for x in range(0, len(arg)):
-            if arg[x] == "x" or arg[x] == "k" or arg[x] == "n":
-                indexOfVar = x
-                break
-        coefficient = arg[0:indexOfVar]
-        coefficient = int(coefficient)
+    if function == "x":
+        if "x" or "k" or "n" in arg: #if the sum has a variable in it
+            for x in range(0, len(arg)):
+                if arg[x] == "x" or arg[x] == "k" or arg[x] == "n":
+                    indexOfVar = x
+                    break
+            coefficient = arg[0:indexOfVar]
+            coefficient = int(coefficient)
+        else:
+            # this is the case wherein it is the sum of just a constant
+            coefficent = int(arg)
+        # NOW COEFFICIENT IS KNOWN
     else:
-        # this is the case wherein it is the sum of just a constant
-        coefficent = int(arg)
-    # NOW COEFFICIENT IS KNOWN
-
+        coefficient = 1
+        skippedSum = 0
+        for z in range(lowerBound, upperBound+1):
+            skippedSum+= z
     # find the power of the variable
     if "^" in arg:
         indexOfCaret = 0
@@ -122,7 +127,9 @@ def sum(arg, lower, upper):
         return(-1)
     else:
         # power too large for summation shortcut
-        return(-1) 
+        return(-1)
+    if skippedSum != 0:
+        result = skippedSum
     return(result)
 
 
@@ -156,6 +163,7 @@ def logic(enteredList):
         os.system("python3 {}.py".format(enteredList[0]))
         outputHistory.append("opened {}".format(enteredList[0]))
         update_historyTable()
+    
     elif enteredList[0] == "choose":
         if(len(enteredList) != 1):
             n = enteredList[1]
@@ -184,6 +192,9 @@ def logic(enteredList):
         stop = input("Hit ENTER to continue ")
 
     elif enteredList[0] == "sum":
+        print()
+        console.print("[bold yellow]NOTICE:[/] your variable must be x when entering the function.")
+        print()
         lowerBound = input("Lower bound (will break if not 1 for now): ")
         upperBound = input("Upper bound: ")
         lowerBound = int(lowerBound)
