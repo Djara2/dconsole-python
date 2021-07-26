@@ -1,4 +1,6 @@
 import os
+import numpy as np
+import matplotlib.pyplot as plt
 import math
 from rich.console import Console
 from rich.markdown import Markdown
@@ -46,90 +48,85 @@ def factorial(x):
         return(x*factorial(x-1))
     else:
         return(1)
-
+def integral(arg, lower, upper):
+    pass
+def derivative(arg):
+    pass
 def sum(arg, lower, upper):
+    #first figure out how it is that the user has entered their function.
+    #as you know, the terminal will accept something like 4x^2+13x^3 which will then be split up into a list with the delimiter being "+". 
+    #There are a few possibilities:
+        # x
+        # x^2
+        # 4x
+        # 4x^2
+        # we do not have to worry about when these are larger than this because they would be split up
+    # CASE: X
     coefficient = 1
-    indexOfVar = 0
-    if function == "x":
-        if "x" or "k" or "n" in arg: #if the sum has a variable in it
-            for x in range(0, len(arg)):
-                if arg[x] == "x" or arg[x] == "k" or arg[x] == "n":
-                    indexOfVar = x
-                    break
-            coefficient = arg[0:indexOfVar]
-            coefficient = int(coefficient)
-        else:
-            # this is the case wherein it is the sum of just a constant
-            coefficent = int(arg)
-        # NOW COEFFICIENT IS KNOWN
-    else:
-        coefficient = 1
-        skippedSum = 0
-        for z in range(lowerBound, upperBound+1):
-            skippedSum+= z
-    # find the power of the variable
-    if "^" in arg:
-        indexOfCaret = 0
-        for x in range(indexOfVar, len(arg)):
-            if arg[x] == "^":
-                indexOfCaret = x
-                break
-        power = arg[indexOfCaret+1:len(arg)]
-        power = int(power)
-    else: #case - there is no power ( power of 1 )
-        if "x" or "k" or "n" in arg:
-            power = 1
-        else:
-            power = -1 # fix so that summation of just a constant value will work
-    # NOW POWER IS KNOWN
+    power = 1
+    indexOfCaret = -1
+    indexOfVar = -1
+    endIndexOfCoefficient = -1
     result = 0
-    num = 0
-    den = 0
-    # sum algorithm
-    if power == -1:
-        for x in range(lower, upper+1):
-            result += coefficient
-    if power == 1:
-        if lower == 1:
-            result = upper * (upper+1)
-            result = result/2
-            result = result * coefficient
+    powerAsString = ""
+    mode = "default"
+    if len(arg) == 1:
+        mode = "justVar"
+    # CASE: x^2 (x^y)
+    elif arg[0] == "x":
+        indexOfCaret = 1
+        power = float(arg[indexOfCaret+1:len(arg)]) # : goes from start to end (uninclusive of end)
+    # CASE: 4x
+    elif arg[0] != "x" and not "^" in arg:
+        # figure out where x is so that you know where the coefficient ends
+        for x in range(0, len(arg)):
+            if arg[x] == "x":
+                indexOfVar = x
+                break
+        coefficient = float(arg[0:indexOfVar])
+    elif arg[0] != "x" and "^" in arg:
+        # figure out where x is so that you know where the coefficient ends
+        for x in range(0, len(arg)):
+            if arg[x] == "x":
+                indexOfVar = x
+                break
+        coefficient = float(arg[0:indexOfVar])
+
+        # do the same thing we just did for the coefficient but now for the power
+        for x in range(indexOfVar+2, len(arg)):
+            powerAsString += arg[x]
+        power = float(powerAsString)
+    # select a shortcut algorithm
+    if mode == "default":
+        if power == 1:
+            # use shortcut (n(n+1))/2
+            numerator = upper * (upper+1)
+            denominator = 2
+            
+        elif power == 2:
+            numerator = upper * (upper+1) * ((2*upper)+1)
+            denominator = 6
+
+        elif power == 3:
+            numerator = pow(upper, 2) * pow(upper+1, 2)
+            denominator = 4
+
+        elif power == 4:
+            numerator = upper * (upper+1) * ((2*upper)+1) * ( (3*pow(upper, 2)) +(3*upper) -1 )
+            denominator = 30
+
+        elif power == 5:
+            numerator = (2*pow(upper, 6)) + (6*pow(upper, 5)) + (5*pow(upper, 4)) - pow(upper, 2)
+            denominator = 12
         else:
-            return(-1) # do later
-    elif power == 2:
-        if lower == 1:
-            den = 6
-            num = upper * (upper+1) * ((2*upper)+1)
-            result = num/den
-            result *= coefficient
-        else:
-            return(-1)
-    elif power == 3:
-        if lower == 1:
-            den = 4
-            upper_squared = pow(upper, 2)
-            upper_plus_one_squared = pow(upper+1, 2)
-            num = upper_squared * upper_plus_one_squared
-            result = num/den
-            result *= coefficient
-        else:
-            return(-1)
-    elif power == 4:
-        if lower == 1:
-            den = 30
-            three_times_var_squared = 3 * pow(upper, 2)
-            # do later 
-            result = -1
-        else:
-            return(-1)
-    elif power == 5:
-        # do later
-        return(-1)
+            result = -1 #power too high
+        if result != -1:
+            result = numerator/denominator
     else:
-        # power too large for summation shortcut
-        return(-1)
-    if skippedSum != 0:
-        result = skippedSum
+        if mode == "justVar":
+            for x in range(lower, upper+1):
+                result+=x
+    result *= coefficient
     return(result)
 
 
@@ -204,7 +201,8 @@ def logic(enteredList):
         if "+" in function:
             functionList = function.split("+")
         else:
-            functionList = function
+            functionList = []
+            functionList.append(function)
         returnList = []
         totalSum = 0
         if function != functionList:
