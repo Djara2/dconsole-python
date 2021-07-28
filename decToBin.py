@@ -1,6 +1,9 @@
 import os
 import time # used for debug
+from colors import GREEN
+from colors import CLEAR
 os.system("clear")
+terminalRows, terminalColumns = os.popen('stty size', 'r').read().split() 
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.table import Table
@@ -63,9 +66,13 @@ def logic(decimals, mode, arguments):
 			decimals.append(x)
 		for x in range(0, len(decimals)):
 			bitStrings.append(decToBin(decimals[x]))
+			amtToPrint = float(terminalColumns) * (x/(len(decimals)-1))
+			amtToPrint = int(amtToPrint)
+			#print(amtToPrint)
+			print("{}{}{}".format(GREEN, "|"*amtToPrint, CLEAR))
 			console.print("Converted: {} out of {}".format(x, len(decimals)-1))
 			os.system("clear")
-		prevText = "Converted: {} out of {}".format(len(decimals), len(decimals)-1)
+		prevText = "Converted: {} out of {}".format(len(decimals)-1, len(decimals)-1)
 		console.print("Building table...")
 		outputTable = Table(title="Conversion")
 		os.system("clear")
@@ -78,6 +85,10 @@ def logic(decimals, mode, arguments):
 		prevText+="\n{}{}".format(" "*len("Building table: "), "Columns: 2 out of 2")
 		console.print(prevText)
 		for x in range(0, len(decimals)):
+			amtToPrint = float(terminalColumns) * (x/(len(decimals)-1))
+			amtToPrint = int(amtToPrint)
+			#print(amtToPrint)
+			print("{}{}{}".format(GREEN, "|"*amtToPrint, CLEAR))
 			console.print(prevText)
 			outputTable.add_row(str(decimals[x]),bitStrings[x])
 			console.print("{}Added rows: {} out of {}".format(" "*len("Building table: "), x, len(decimals)-1))
@@ -89,6 +100,7 @@ def logic(decimals, mode, arguments):
 
 while True:
 	defaultDisplay()
+	#print("Terminal columns: {}".format(terminalColumns))
 	decimals = []
 	exceptionRaised = False
 	entered = input("Enter a decimal value: ")
