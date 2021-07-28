@@ -16,8 +16,8 @@ header2 = "last updated: 07/25/2021"
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
-knowncmd = ["h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
-externalPrograms = ["mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+knowncmd = ["decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+externalPrograms = ["decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 history = []
 numbers = []
 binaries = []
@@ -148,7 +148,7 @@ def logic(enteredList):
 while(True):
     defaultDisplay()
     entered = input("> ")
-    if entered != "htmlBuilder":
+    if not entered in externalPrograms:
         entered = entered.lower()
     if entered == "calc":
         entered = "calculator"
