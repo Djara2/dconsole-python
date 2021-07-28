@@ -1,7 +1,6 @@
 import os
 import time # used for debug
-from colors import GREEN
-from colors import CLEAR
+from colors import GREEN, CLEAR, CYAN
 os.system("clear")
 terminalRows, terminalColumns = os.popen('stty size', 'r').read().split() 
 from rich.console import Console
@@ -69,29 +68,33 @@ def logic(decimals, mode, arguments):
 			amtToPrint = float(terminalColumns) * (x/(len(decimals)-1))
 			amtToPrint = int(amtToPrint)
 			#print(amtToPrint)
-			print("{}{}{}".format(GREEN, "|"*amtToPrint, CLEAR))
-			console.print("Converted: {} out of {}".format(x, len(decimals)-1))
+			buildingText = ""
+			buildingText+="{}{}{}".format(GREEN, "|"*amtToPrint, CLEAR)
+			buildingText += "\nConverted: {}{}{} out of {}{}{}".format(CYAN, x, CLEAR, CYAN, len(decimals)-1, CLEAR)
+			print(buildingText)
 			os.system("clear")
-		prevText = "Converted: {} out of {}".format(len(decimals)-1, len(decimals)-1)
+		prevText = "Converted: {}{}{} out of {}{}{}".format(CYAN, len(decimals)-1, CLEAR, CYAN, len(decimals)-1, CLEAR)
 		console.print("Building table...")
 		outputTable = Table(title="Conversion")
 		os.system("clear")
 		prevText+="\nBuilding table: created!"
 		console.print(prevText)
-		console.print("Columns: {} out of {}".format("0", "2"))
+		console.print("Columns: {}{}{} out of {}{}{}".format(CYAN, "0", CLEAR, CYAN, "2", CLEAR))
 		outputTable.add_column("In")
 		outputTable.add_column("Out")
 		os.system("clear")
-		prevText+="\n{}{}".format(" "*len("Building table: "), "Columns: 2 out of 2")
+		prevText+="\n{}{}".format(" "*len("Building table: "), "Columns: {}2{} out of {}2{}".format(CYAN, CLEAR, CYAN, CLEAR))
 		console.print(prevText)
 		for x in range(0, len(decimals)):
 			amtToPrint = float(terminalColumns) * (x/(len(decimals)-1))
 			amtToPrint = int(amtToPrint)
 			#print(amtToPrint)
-			print("{}{}{}".format(GREEN, "|"*amtToPrint, CLEAR))
-			console.print(prevText)
+			buildingText = ""
+			buildingText += "{}{}{}".format(GREEN, "|"*amtToPrint, CLEAR)
+			buildingText += "\n{}".format(prevText)
 			outputTable.add_row(str(decimals[x]),bitStrings[x])
-			console.print("{}Added rows: {} out of {}".format(" "*len("Building table: "), x, len(decimals)-1))
+			buildingText+="\n{}Added rows: {}{}{} out of {}{}{}".format(" "*len("Building table: "), CYAN, x, CLEAR, CYAN, len(decimals)-1, CLEAR)
+			print(buildingText)
 			os.system("clear")
 		console.print("Printing table...\n")
 		console.print(outputTable)
