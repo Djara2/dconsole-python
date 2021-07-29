@@ -4,7 +4,7 @@ import pyperclip
 import os
 header = input("What is the header title of this program?: ")
 progName = input("What should the name of this file be?: ")
-buildString = "import os\nos.system(\"clear\")\nfrom rich.console import Console\nfrom rich.markdown import Markdown\nfrom rich.table import Table\nconsole = Console()\nMD_TITLE = Markdown(\"# {}\")\ndef defaultDisplay():\n\tos.system(\"clear\")\n\tconsole.print(MD_TITLE)\n\t\n\ndef logic(entered, enteredList):\n\tpass\n\nwhile True:\n\tpass".format(header)
+buildString = "import os\nquitKeywords = [\"exit\", \"quit\", \"ex\", \"eit\", \"eixt\"]\nos.system(\"clear\")\nfrom rich.console import Console\nfrom rich.markdown import Markdown\nfrom rich.table import Table\nconsole = Console()\nMD_TITLE = Markdown(\"# {}\")\ndef defaultDisplay():\n\tos.system(\"clear\")\n\tconsole.print(MD_TITLE)\n\t\n\ndef logic(entered, enteredList):\n\tif entered in quitKeywords:\n\t\texit()\n\nwhile True:\n\tpass".format(header)
 pyperclip.copy(buildString)
 pyautogui.hotkey("ctrl", "alt", "t")
 time.sleep(1)
