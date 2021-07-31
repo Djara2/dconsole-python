@@ -41,6 +41,15 @@ while True:
             pyautogui.write("$w")
             pyautogui.press("enter")
             time.sleep(1.1)
+        pyautogui.write("$tu")
+        pyautogui.press("enter")
+    elif entered == "d" or entered == "dk":
+        pyautogui.hotkey("alt", "tab")
+        pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])
+        pyautogui.click()
+        pyautogui.write("$dk")
+        pyautogui.press("enter")
+        pyautogui.hotkey("alt", "tab")
     elif entered == "vote":
         pyautogui.hotkey("alt", "tab")
         pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])
