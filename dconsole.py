@@ -16,7 +16,7 @@ header2 = "last updated: 07/25/2021"
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
-knowncmd = ["binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+knowncmd = ["speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 externalPrograms = ["binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 history = []
 numbers = []
@@ -49,6 +49,9 @@ def logic(enteredList):
         defaultDisplay()
     if enteredList[0] == "quit" or enteredList[0] == "exit":
         exit()
+    elif enteredList[0] == "speedtest":
+        os.system("./speedtest.sh")
+        stop = input(stoptext)
     elif enteredList[0] == "w3m":
         if enteredList[1] == "e":
             # parameter for exact link

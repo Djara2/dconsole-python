@@ -4,9 +4,8 @@ import pyautogui
 from rich.console import Console
 from rich.markdown import Markdown
 console = Console()
-TEXTBAR = []
-TEXTBAR.append(730)
-TEXTBAR.append(1023)
+TEXTBAR = [730, 1023, 810, 1154]
+# for TEXTBAR, indices 0 and 1 are for the HP laptop and 2 and 3 are for the virtual machine
 LINK = []
 LINK.append(818)
 LINK.append(802)
