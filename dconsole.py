@@ -1,6 +1,8 @@
 import os
+import sys
 import time
-import pyautogui
+if sys.argv[1] != "np":
+    import pyautogui
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.table import Table
@@ -46,6 +48,7 @@ def logic(enteredList):
         defaultDisplay()
     if enteredList[0] == "quit" or enteredList[0] == "exit":
         exit()
+
     elif enteredList[0] == "speedtest":
         os.system("./speedtest.sh")
         stop = input(stoptext)
