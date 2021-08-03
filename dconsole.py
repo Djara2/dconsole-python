@@ -1,8 +1,11 @@
 import os
 import sys
 import time
-if sys.argv[1] != "np":
+if len(sys.argv) == 1:
     import pyautogui
+else:
+    if sys.argv[1] == "np":
+        input("Pyautogui will not be imported ")
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.table import Table
