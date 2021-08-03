@@ -1,10 +1,12 @@
 import webbrowser
 import os
+import dtools
 helpText = "search is a lightweight terminal utility "
 CLEAR = "\u001b[0m"
 CYAN = "\u001b[36;1m"
 GREEN = "\u001b[32;1m"
 PINK = "\u001b[35;1m"
+supports = input("Does your system work with the webbrowser library? [y/n] ")
 os.system("clear")
 bb = "        "
 engines = ["bing", "google", "youtube", "bing images", "google images", "exit", "quit", "b", "g", "y", "amazon", "help", "jisho", "j", "w3m"]
@@ -46,7 +48,6 @@ while(True):
 						query+=argumentL[x]+"+"
 					else:
 						query+=argumentL[x]
-			webbrowser.open(query)
 		#CASE: GOOGLE SEARCH
 		if(argumentL[0] == "google" or argumentL[0] == "g"):
 			if(argumentL[1] == "images" or argumentL[1] == "i"):
@@ -63,7 +64,7 @@ while(True):
 						query+=argumentL[x]+"+"
 					else:
 						query+=argumentL[x]
-			webbrowser.open(query)
+
 		#CASE: YOUTUBE SEARCH
 		if(argumentL[0] == "youtube" or argumentL[0] == "y"):
 			query = "https://www.youtube.com/results?search_query="
@@ -72,7 +73,7 @@ while(True):
 					query+=argumentL[x]+"+"
 				else:
 					query+=argumentL[x]
-			webbrowser.open(query)
+		
 		#CASE: AMAZON SEARCH
 		if(argumentL[0] == "amazon" or argumentL[0] == "a"):
 			query = "https://www.amazon.com/s?k="
@@ -82,8 +83,8 @@ while(True):
 					query+=argumentL[x]+"+"
 				else:
 					query+=argumentL[x]
-			query+=queryEnd
-			webbrowser.open(query)
+				query+=queryEnd
+
 		#CASE: JISHO SEARCH
 		if(argumentL[0] == "jisho" or argumentL[0] == "j"):
 			query = "https://jisho.org/search/"
@@ -92,6 +93,11 @@ while(True):
 					query+=argumentL[x]+"%20"
 				else:
 					query+=argumentL[x]
-			webbrowser.open(query)
 		#CASE W3M BUILT IN BROWSER - GOES TO WEBSITE LINK TYPED IN DIRECTLY - AUTO ADDS HTTPS:/WWW.
+		if supports == "y":
+			webbrowser.open(query)
+		else:
+			altText = "Ctrl+Click: [{}]".format(query)
+			print(dtools.generateClickableLink(query, altText))
+
 

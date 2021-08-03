@@ -1,4 +1,3 @@
-# test comment for linux github
 import os
 from rich.console import Console
 from rich.markdown import Markdown
@@ -8,28 +7,23 @@ mdTITLE = Markdown(TITLE)
 from dnum import *
 from colors import *
 from dbin import *
+import dtools
 import pyperclip
-from googletrans import Translator
-translator = Translator()
-header = "version 1 . 81"
-header2 = "last updated: 07/25/2021"
+header = "version 1 . 82"
+header2 = "last updated: 08/03/2021" # TIME STAMP
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
-knowncmd = ["speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
-externalPrograms = ["binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+knowncmd = dtools.knownCommandsList
+externalPrograms = dtools.externalProgramsList
 history = []
 numbers = []
 binaries = []
 new = dnum(1, 1, 1)
 
-def figlet(text):
-    os.system("figlet {}".format(text))
-
 def defaultDisplay():
     global console, mdTITLE
     os.system("clear")
-    #os.system("figlet {}".format("dconsole")) - no longer used in favor of better looking console.print(markdown) from rich library.
     console.print(mdTITLE)
     print(header)
     print(header2+"\n")
@@ -51,6 +45,11 @@ def logic(enteredList):
         exit()
     elif enteredList[0] == "speedtest":
         os.system("./speedtest.sh")
+        stop = input(stoptext)
+    elif enteredList[0] == "commands":
+        alphabetizedList = knowncmd.sort()
+        for x in range(0, len(knowncmd)):
+            print("{}. {}".format(x, known[x]))
         stop = input(stoptext)
     elif enteredList[0] == "w3m":
         if enteredList[1] == "e":

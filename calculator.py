@@ -1,7 +1,7 @@
 import os
-import numpy as np
-import matplotlib.pyplot as plt
 import math
+import time
+import dmath
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.table import Table
@@ -31,7 +31,7 @@ console = Console()
 inputHistory = []
 outputHistory = []
 externalPrograms = ["discount", "tip", "bt"]
-knowncmd = ["sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+knowncmd = ["srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
 
 for x in range(0, len(externalPrograms)):
     knowncmd.append(externalPrograms[x])
@@ -187,6 +187,39 @@ def logic(enteredList):
         outputHistory.append(result)
         update_historyTable()
         stop = input("Hit ENTER to continue ")
+
+    elif enteredList[0] == "squareRootsInRange" or enteredList[0] == "srir":
+        start = time.time()
+        parameter = []
+        for x in range(1, len(enteredList)):
+            parameter.append(enteredList[x])
+        numbersVisited, result = dmath.squareRootsInRange(parameter)
+        squareRootsTable = Table(title="Square Roots in Range")
+        squareRootsTable.add_column("Number")
+        squareRootsTable.add_column("Square Root")
+        for x in range(0, len(result)):
+            squareRootsTable.add_row(str(numbersVisited[x]), str(result[x]))
+        console.print(squareRootsTable)
+        timeTaken = time.time() - start
+        console.print("Generated in {} seconds.".format(timeTaken))
+        stop = input("Hit ENTER to continue ")
+    elif enteredList[0] == "perfectsquaresinrange" or enteredList[0] == "psir":
+        start = time.time()
+        parameter = []
+        for x in range(1, len(enteredList)):
+            parameter.append(enteredList[x])
+        result = dmath.perfectSquaresInRange(parameter)
+        console.print("Found {} squares in the given range.".format(len(result)))
+        squaresInRangeTable = Table(title="Squares in Range")
+        squaresInRangeTable.add_column("Square")
+        squaresInRangeTable.add_column("Square Root")
+
+        for y in range(0, len(result)):
+            squaresInRangeTable.add_row(str(result[y]), str(math.sqrt(result[y])))
+        console.print(squaresInRangeTable)
+        timeTaken = time.time() - start
+        print("Generated in {} seconds.".format(timeTaken))
+        stop = input("\nHit ENTER to continue ")
 
     elif enteredList[0] == "sum":
         print()
