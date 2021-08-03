@@ -1,4 +1,6 @@
 import os
+import time
+import pyautogui
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.table import Table
@@ -20,6 +22,7 @@ history = []
 numbers = []
 binaries = []
 new = dnum(1, 1, 1)
+sendTerminateSignal = False
 
 def defaultDisplay():
     global console, mdTITLE
@@ -30,7 +33,7 @@ def defaultDisplay():
     print("Type \"help\" for options\n")
 
 def logic(enteredList):
-    global knowncmd, history, numbers, binaries, stoptext, new, header, externalPrograms, entered
+    global sendTerminateSignal, knowncmd, history, numbers, binaries, stoptext, new, header, externalPrograms, entered
     print()
     if enteredList[0] in externalPrograms:
         cmd = "python3 {}.py".format(enteredList[0])
@@ -47,9 +50,8 @@ def logic(enteredList):
         os.system("./speedtest.sh")
         stop = input(stoptext)
     elif enteredList[0] == "commands":
-        alphabetizedList = knowncmd.sort()
         for x in range(0, len(knowncmd)):
-            print("{}. {}".format(x, known[x]))
+            print("{}. {}".format(x+1, knowncmd[x]))
         stop = input(stoptext)
     elif enteredList[0] == "w3m":
         if enteredList[1] == "e":
