@@ -52,3 +52,8 @@ def squareRootsInRange(args):
         results.append(math.sqrt(x))
     return(numbersVisited, results)
 
+def divides(divisor, dividend):
+    if dividend%divisor == 0:
+        return(True)
+    else:
+        return(False)

@@ -40,25 +40,30 @@ def defaultDisplay():
 def logic(enteredList):
     global sendTerminateSignal, knowncmd, history, numbers, binaries, stoptext, new, header, externalPrograms, entered
     print()
+    
     if enteredList[0] in externalPrograms:
         cmd = "python3 {}.py".format(enteredList[0])
         os.system(cmd)
         print()
         stop = input(stoptext)
+    
     if not enteredList[0] in knowncmd and not enteredList[0] in externalPrograms:
         print("Command unrecognized. Type \"help\" for commands")
         stop = input("Hit ENTER to continue ")
         defaultDisplay()
+    
     if enteredList[0] == "quit" or enteredList[0] == "exit":
         exit()
 
     elif enteredList[0] == "speedtest":
         os.system("./speedtest.sh")
         stop = input(stoptext)
+    
     elif enteredList[0] == "commands":
-        for x in range(0, len(knowncmd)):
-            print("{}. {}".format(x+1, knowncmd[x]))
+        listOfLists = dtools.generateListOfListsByLetter(knowncmd)
+        dtools.iteratePrintList(listOfLists, "alphabet")
         stop = input(stoptext)
+    
     elif enteredList[0] == "w3m":
         if enteredList[1] == "e":
             # parameter for exact link
@@ -69,22 +74,18 @@ def logic(enteredList):
                 buildString+="{}+".format(enteredList[x])
             os.system("w3m {}".format(buildString))
         stop = input(stoptext)
+    
     elif enteredList[0] == "programs":
         for x in range(0, len(externalPrograms)):
             print("{}. {}".format(x+1, externalPrograms[x]))
         stop = input("\n"+stoptext)
+    
     elif enteredList[0] == "len":
         print()
         print("The length of \"{}\" is {} characters".format(entered[4:], len(entered[4:])))
         print()
         stop = input(stoptext)
-    elif enteredList[0] == "translate":
-        src1 = enteredList[1]
-        dest1 = enteredList[2]
-        start = (len(src1)-1)+(len(dest1)-1)+1
-        content = entered[start:]
-        translator.translate(content, src=src1, dest=dest1)
-        stop = input(stoptext)
+
     elif enteredList[0] == "history" or enteredList[0] == "h":
         os.system("clear")
         MD_HISTORY_TITLE = Markdown("# History")
@@ -95,12 +96,14 @@ def logic(enteredList):
         console.print("Use command [green]\"hre #\"[/] to enter an item from history as input")
         print()
         stop = input("Hit ENTER to continue ")
+
     elif enteredList[0] == "hre":
         index = int(enteredList[1])
         itemToCopy = history[index-1]
         pyperclip.copy(itemToCopy)
         print("\"{}\" has been copied to the clipboard. Paste from clipboard or type \"v\" on the input line to automatically paste.".format(itemToCopy))
         stop = input("Hit ENTER to continue ")
+    
     elif enteredList[0] == "new":
         if enteredList[1] == "num":
             if len(enteredList) != 3:
@@ -124,6 +127,7 @@ def logic(enteredList):
                 stop = input(stoptext)
         elif enteredList[1] == "bin":
             pass
+
     elif enteredList[0] == "numbers":
         os.system("clear")
         figlet("Numbers")
