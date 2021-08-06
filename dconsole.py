@@ -76,6 +76,18 @@ def logic(enteredList):
             os.system("w3m {}".format(buildString))
         stop = input(stoptext)
     
+    elif enteredList[0] == "vim":
+        if len(enteredList) == 1:
+            dtools.iteratePrintList(externalPrograms, "num1")
+            console.print("[bold cyan]Enter \"none\" to rollback[/]")
+            argument = input("Edit which file?: ")
+            if argument == "none":
+                print("Exiting selection process.")
+            else:
+                os.system("vim {}.py".format(externalPrograms[int(argument)-1]))
+        else:
+            os.system("vim {}.py".format(externalPrograms[int(arguments)-1]))
+        stop = input(stoptext)
     elif enteredList[0] == "programs":
         dtools.iteratePrintList(externalPrograms, "num1")
         stop = input("\n"+stoptext)

@@ -1,9 +1,9 @@
 import dmath
 import re
 from rich.console import Console
-externalProgramsList = ["latexBuilder", "binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+externalProgramsList = ["dtools", "latexBuilder", "binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 
-knownCommandsList = ["rb", "commands", "speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+knownCommandsList = ["vim", "rb", "commands", "speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 
 console = Console()
 
@@ -133,4 +133,23 @@ def detectExternalProgramAlias(entered):
     else:
         return(entered)
 
-    
+def handleSpecialChars(workingList, specialChars):
+    for x in range(0, len(workingList)):
+        if workingList[x] in specialChars:
+            if workingList[x] == "vec":
+                workingList[x] = "\\vec{"+workingList[x+1]+"}"
+            elif workingList[x] == "delta" or workingList[x] == "dd":
+                workingList[x] = "\\Delta "
+            elif workingList[x] == "alpha" or workingList[x] == "aa":
+                workingList[x] = "\\alpha "
+            elif workingList[x] == "omega" or workingList[x] == "oo":
+                workingList[x] = "\\omega "
+            elif workingList[x] == "right" or workingList[x] == "rr":
+                workingList[x] == "\\Rightarrow "
+            elif workingList[x] == "left" or workingList[x] == "ll":
+                workingList[x] = "\\Leftarrow "
+            else:
+                pass
+        else:
+            next
+    return(workingList)
