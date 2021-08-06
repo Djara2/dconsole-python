@@ -23,6 +23,7 @@ console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
 knowncmd = dtools.knownCommandsList
 externalPrograms = dtools.externalProgramsList
+externalPrograms.sort()
 history = []
 numbers = []
 binaries = []
@@ -76,8 +77,7 @@ def logic(enteredList):
         stop = input(stoptext)
     
     elif enteredList[0] == "programs":
-        for x in range(0, len(externalPrograms)):
-            print("{}. {}".format(x+1, externalPrograms[x]))
+        dtools.iteratePrintList(externalPrograms, "num1")
         stop = input("\n"+stoptext)
     
     elif enteredList[0] == "len":
@@ -164,9 +164,11 @@ while(True):
     entered = input("> ")
     if not entered in externalPrograms:
         entered = entered.lower()
-    if entered == "calc":
-        entered = "calculator"
-    enteredList = entered.split()
+    entered = dtools.detectExternalProgramAlias(entered)
+    if " " in entered:
+        enteredList = entered.split()
+    else:
+        enteredList = [entered]
     history.append(entered)
     logic(enteredList)
     

@@ -1,7 +1,7 @@
 import dmath
 import re
 from rich.console import Console
-externalProgramsList = ["binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+externalProgramsList = ["latexBuilder", "binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 
 knownCommandsList = ["rb", "commands", "speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 
@@ -106,6 +106,12 @@ def iteratePrintList(workingList, mode):
             else:
                 str_x = str(x)
             print("{}. {}".format(str_x, workingList[x]))
+        elif mode == "num1":
+            if x+1 < 10:
+                str_x = "0{}".format(x+1)
+            else:
+                str_x = str(x+1)
+            print("{}. {}".format(str_x, workingList[x]))
         elif mode == "alphabet":
             #print("{}:\n{}\n".format(workingList[x][0][0].upper(), workingList[x]))
             console.print("[bold cyan]{}:[/]".format(workingList[x][0][0].upper()))
@@ -116,5 +122,15 @@ def purgeFromString(thing, string):
         thing = "\s+"
     return(re.sub(thing, "", string))
 
+def detectExternalProgramAlias(entered):
+    # pass in the variable "entered" in dconsole. Set it equal to the return of this function. The function will return the "official" name if an alias is detected. Otherwise it will return what was passed in.
+    aliases = ["calc", "latexbuilder", "latex"]
+    if entered in aliases:
+        if entered == "calc":
+            return("calculator")
+        elif entered == "latexbuilder" or entered == "latex":
+            return("latexBuilder")
+    else:
+        return(entered)
 
     
