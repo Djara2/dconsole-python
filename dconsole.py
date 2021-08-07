@@ -16,8 +16,8 @@ from colors import *
 from dbin import *
 import dtools
 import pyperclip
-header = "version 1 . 82"
-header2 = "last updated: 08/03/2021" # TIME STAMP
+header = "version 1 . 83"
+header2 = "last updated: 08/07/2021" # TIME STAMP
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
