@@ -15,3 +15,5 @@ stringList = string.split(" ")
 stringList.sort()
 wordCount = dtools.generateListOfListsByOccurence(stringList)
 dtools.iteratePrintList(wordCount, "num")
+testString = "This is a simple string with spaces that I want to see if it can properly print it takes up 2 lines so it should do it well"
+dtools.betterPrint(testString, "t2")

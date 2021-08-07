@@ -15,10 +15,33 @@ def defaultDisplay():
 	
 
 def logic(entered, enteredList):
+    latexEntities = ["sqrt", "frac"]
+    specialChars = ["<=", "=>", "!<", "!>", "!<=", "!=>", "notmem", "notmember", "notequal", "neq", "notin", "notlessthan", "notless", "nless", "leq", "geq", "notgreater" , "notgreaterthan", "about", "approx", "abt", "plusorminus", "porm", "pm", "subset", "sub", "natural", "real", "ints", "dd", "oo", "aa", "rr", "ll" "delta", "rightarrow", "leftarrow", "alpha", "omega", "vec", "member", "in", "mem", "!=", "nsubset", "notsubset", "nsub", "notsub", "!sub", ]
     buildString = ""
     matrixType = "bmatrix"
     if entered in quitKeywords:
         exit()
+
+    elif entered == "reg" or entered == "general":
+        console.print("[bold cyan]Special characters like \\ will be added automatically. You can just type \"delta\" for example as opposed to \"\\delta\".")
+        expression = input("Type your expression: ")
+        expressionList = expression.split()
+        expressionList = dtools.handleSpecialChars(expressionList, specialChars)
+        buildString = "$"
+        for x in range(0, len(expressionList)):
+            buildString += "{} ".format(expressionList[x])
+        buildString += "$"
+        usePyperclip = input("Does your system work with Pyperclip?: ")
+        if usePyperclip == "y":
+            pyperclip.copy(buildString)
+        print()
+        printOutput = input("Print result to console?: ")
+        if printOutput == "y":
+            print()
+            console.print("[bold yellow]RESULT:[/][bold cyan] {}[/]".format(buildString))
+        print()
+
+
     elif entered == "frac":
         numerator = []
         denominator = []
@@ -29,9 +52,7 @@ def logic(entered, enteredList):
         print()
         console.print("! [bold cyan]You can add a bunch of items in a single input line, [/][bold italic yellow]however, if you are trying to add a LaTex entity (i.e. a fraction), then hit RETURN and do it on a new input line.[/]")
         print()
-        console.print("! An exception to this is simple entities like theta and omega, which can be entered without starting a new input line or escape characters.")
-        latexEntities = ["sqrt", "frac"]
-        specialChars = ["dd", "oo", "aa", "rr", "ll" "delta", "rightarrow", "leftarrow", "alpha", "omega", "vec"]
+        dtools.betterPrint("[bold red]! An exception to this is simple entities like theta and omega, which can be entered without starting a new input line or escape characters.[/]", "t1")
         print()
         while buildingNumerator == "y":
             item = input("What do you want to add?: ")

@@ -1,3 +1,4 @@
+import os
 import dmath
 import re
 from rich.console import Console
@@ -137,7 +138,8 @@ def handleSpecialChars(workingList, specialChars):
     for x in range(0, len(workingList)):
         if workingList[x] in specialChars:
             if workingList[x] == "vec":
-                workingList[x] = "\\vec{"+workingList[x+1]+"}"
+                workingList[x] = "\\vec{"
+                workingList[x+1] += "}"
             elif workingList[x] == "delta" or workingList[x] == "dd":
                 workingList[x] = "\\Delta "
             elif workingList[x] == "alpha" or workingList[x] == "aa":
@@ -148,8 +150,80 @@ def handleSpecialChars(workingList, specialChars):
                 workingList[x] == "\\Rightarrow "
             elif workingList[x] == "left" or workingList[x] == "ll":
                 workingList[x] = "\\Leftarrow "
+            
+            elif workingList[x] == "in" or workingList[x] == "member" or workingList[x] == "mem":
+                workingList[x] = "\\in"
+            
+            elif workingList[x] == "neq" or workingList[x] == "notequal" or workingList[x] == "!=":
+                workingList[x] = "\\neq"
+            
+            elif workingList[x] == "notin" or workingList[x] == "notmem" or workingList[x] == "notmember":
+                workingList[x] = "\\notin"
+            
+            elif workingList[x] == "porm" or workingList[x] == "plusorminus" or workingList[x] == "pm" or workingList[x] == "+-":
+                workingList[x] = "\\pm"
+
+            
+            elif workingList[x] == "notlessthan" or workingList[x] == "notless" or workingList[x] == "nless" or workingList[x] == "!<":
+                workingList[x] = "\\nless"
+
+            elif workingList[x] == "!>" or workingList[x] == "notgreaterthan" or workingList[x] == "notgreater" or workingList[x] == "ngreater":
+                workingList[x] == "\\ngtr"
+
+            elif workingList[x] == "!>=":
+                workingList[x] = "\\ngeq"
+
+            elif workingList[x] == "!<=":
+                workingList[x] = "\\nleq"
+
+            elif workingList[x] == "<=" or workingList[x] == "leq" or workingList[x] == "lessthanorqualto" or workingList[x] == "lessequal" or workingList[x] == "lessthanequal" or workingList[x] == "lessequalto":
+                workingList[x] = "\\leq"
+
+            elif workingList[x] == ">=" or workingList[x] == "geq" or workingList[x] == "greaterorequal" or workingList[x] == "greaterthanorrequalto" or workingList[x] == "greaterthanequalto" or workingList[x] == "greaterequal":
+                workingList[x] = "\\geq"
+            
+            elif workingList[x] == "abt" or workingList[x] == "approx" or workingList[x] == "about":
+                workingList[x] = "\\approx"
+            
+            elif workingList[x] == "subset" or workingList[x] == "sub":
+                workingList[x] = "\\subset"
+            
+            elif workingList[x] == "notsubset" or workingList[x] == "nsubset" or workingList[x] == "notsub" or workingList[x] == "nsub" or workingList[x] == "!sub":
+                workingList[x] = "\\not\\subset"
+            
+            elif workingList[x] == "real":
+                workingList[x] = "\\R"
+            
+            elif workingList[x] == "ints":
+                workingList[x] = "\\Z"
+            
+            elif workingList[x] == "natural":
+                workingList[x] = "\\N"
+            
             else:
                 pass
         else:
             next
     return(workingList)
+
+def getTerminalSize():
+    terminalRows, terminalColumns = os.popen('stty size', 'r').read().split()
+    return(terminalRows, terminalColumns)
+
+def betterPrint(what, mode):
+    rows, columns = getTerminalSize()
+    allWords = what.split()
+    buildString = ""
+    buildLine = ""
+    for x in range(0, len(allWords)):
+        if mode[0] == "t" and len(buildLine) == 0:
+            buildLine += "\t"*int(mode[1])
+        if len(buildLine+" {}".format(allWords[x])) < int(columns):
+            buildLine += " {}".format(allWords[x])
+        else:
+            buildString += "{}\n".format(buildLine)
+            buildLine = ""
+    console.print(buildString)
+
+
+        
