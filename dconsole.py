@@ -56,6 +56,9 @@ def logic(enteredList):
     if enteredList[0] == "quit" or enteredList[0] == "exit":
         exit()
 
+    elif enteredList[0] == "ascii":
+        dtools.convertToASCII("penguin.png", 10)
+        stop = input(stoptext)
     elif enteredList[0] == "speedtest":
         os.system("./speedtest.sh")
         stop = input(stoptext)

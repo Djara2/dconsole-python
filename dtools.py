@@ -1,10 +1,12 @@
+import pyperclip
+import PIL.Image
 import os
 import dmath
 import re
 from rich.console import Console
-externalProgramsList = ["dtools", "latexBuilder", "binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+externalProgramsList = ["mudaeGui", "dtools", "latexBuilder", "binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 
-knownCommandsList = ["vim", "rb", "commands", "speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+knownCommandsList = ["ascii", "vim", "rb", "commands", "speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 
 console = Console()
 
@@ -125,12 +127,14 @@ def purgeFromString(thing, string):
 
 def detectExternalProgramAlias(entered):
     # pass in the variable "entered" in dconsole. Set it equal to the return of this function. The function will return the "official" name if an alias is detected. Otherwise it will return what was passed in.
-    aliases = ["calc", "latexbuilder", "latex"]
+    aliases = ["calc", "latexbuilder", "latex", "mg", "mudaeg"]
     if entered in aliases:
         if entered == "calc":
             return("calculator")
         elif entered == "latexbuilder" or entered == "latex":
             return("latexBuilder")
+        elif entered == "mg" or entered == "mudaeg":
+            return("mudaeGui")
     else:
         return(entered)
 
@@ -225,5 +229,30 @@ def betterPrint(what, mode):
             buildLine = ""
     console.print(buildString)
 
+ASCIICHARS = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ".", ","]
+def resizeImage(image, resizeFactor):
+    width, height = image.size
+    newWidth = int(width/resizeFactor)
+    newHeight = int(height/resizeFactor)
+    resizedImage = image.resize((newWidth, newHeight))
+    return(resizedImage)
 
-        
+def convertToASCII(imagePath, resizeFactor):
+    try:
+        image = PIL.Image.open(imagePath)
+    except:
+        print("{} is not a valid path".format(imagePath))
+    newImageData = pixelsToASCII(makeGreyscale(resizeImage(image, resizeFactor)))
+    pixelCount = len(newImageData)
+    ASCIIimage = "\n".join(newImageData[i:(i+10)] for i in range(0, pixelCount))
+    pyperclip.copy(ASCIIimage)
+
+
+def makeGreyscale(image):
+    greyscaleImage = image.convert("L")
+    return(greyscaleImage)
+
+def pixelsToASCII(image):
+    pixels = image.getdata()
+    characters = "".join([ASCIICHARS[pixel//25] for pixel in pixels])
+    return(characters)
