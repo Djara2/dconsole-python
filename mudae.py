@@ -1,6 +1,7 @@
 import os
 import time
 import pyautogui
+import mudaeGui
 from rich.console import Console
 from rich.markdown import Markdown
 console = Console()
@@ -31,6 +32,8 @@ while True:
         pyautogui.click()
         pyautogui.write("$dk")
         pyautogui.press("enter")
+        time.sleep(0.3)
+        pyautogui.hotkey("alt", "tab")
     elif entered == "b" or entered == "start":
         print("Starting in 5 seconds")
         time.sleep(5)
@@ -49,6 +52,27 @@ while True:
         pyautogui.write("$dk")
         pyautogui.press("enter")
         pyautogui.hotkey("alt", "tab")
+    elif entered == "tu" or entered == "t":
+        pyautogui.hotkey("alt", "tab")
+        pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])
+        pyautogui.click()
+        pyautogui.write("$tu")
+        pyautogui.press("enter")
+        time.sleep(0.5)
+        pyautogui.hotkey("alt", "tab")
+    elif entered == "nav":
+        pyautogui.hotkey("win", "4")
+        time.sleep(0.5)
+        pyautogui.hotkey("ctrl", "k")
+        time.sleep(0.5)
+        pyautogui.write("psycho")
+        time.sleep(0.5)
+        pyautogui.press("enter")
+        time.sleep(0.5)
+        mudaeGui.engageTextbar()
+        time.sleep(0.5)
+        pyautogui.hotkey("alt", "tab")
+        pyautogui
     elif entered == "vote":
         pyautogui.hotkey("alt", "tab")
         pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])

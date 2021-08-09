@@ -212,6 +212,9 @@ def logic(entered, enteredList):
         printBuild = input("Print result to console?: ")
         if printBuild == "y":
             print(buildString)
+        showRender = input("Show preview of rendered content?: ")
+        if showRender == "y":
+            dtools.plotLaTex(buildString[1:len(buildString)-1])
 
 while True:
     defaultDisplay()

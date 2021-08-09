@@ -13,22 +13,23 @@ def switchToDiscord():
 
 def engageTextbar():
     pyautogui.moveTo(730, 1023)
-    time.sleep(0.1)
+    time.sleep(0.3)
     pyautogui.click()
 
 def switchToMarryChannel():
-    pyautogui.hotkey("ctrl", "k")
     time.sleep(0.3)
+    pyautogui.hotkey("ctrl", "k")
+    time.sleep(0.5)
     pyautogui.write("psycho")
     pyautogui.press("enter")
 
 def dk():
     switchToDiscord()
-    time.sleep(0.2)
+    time.sleep(0.3)
     switchToMarryChannel()
-    time.sleep(0.2)
+    time.sleep(0.3)
     engageTextbar()
-    time.sleep(0.1)
+    time.sleep(0.3)
     pyautogui.write("$dk")
     time.sleep(0.5)
     pyautogui.press("enter")

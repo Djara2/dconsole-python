@@ -1,9 +1,9 @@
 import pyperclip
-import PIL.Image
 import os
 import dmath
-import re
+import matplotlib.pyplot as plt
 from rich.console import Console
+
 externalProgramsList = ["mudaeGui", "dtools", "latexBuilder", "binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 
 knownCommandsList = ["ascii", "vim", "rb", "commands", "speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
@@ -34,6 +34,10 @@ def count(thing, inObject):
     return(instances)
 
 def getUniqueWords(workingList):
+    # remove punctuation symbols from every listing so that "characters" and "characters." do not appear as 2 unique words.
+    for x in range(0, len(workingList)):
+        workingList[x] = removePunctuations(workingList[x])
+
     uniqueWords = []
     for x in range(0, len(workingList)):
         if not workingList[x] in uniqueWords:
@@ -119,11 +123,6 @@ def iteratePrintList(workingList, mode):
             #print("{}:\n{}\n".format(workingList[x][0][0].upper(), workingList[x]))
             console.print("[bold cyan]{}:[/]".format(workingList[x][0][0].upper()))
             print("{}\n".format(workingList[x]))
-
-def purgeFromString(thing, string):
-    if thing == " ":
-        thing = "\s+"
-    return(re.sub(thing, "", string))
 
 def detectExternalProgramAlias(entered):
     # pass in the variable "entered" in dconsole. Set it equal to the return of this function. The function will return the "official" name if an alias is detected. Otherwise it will return what was passed in.
@@ -229,30 +228,31 @@ def betterPrint(what, mode):
             buildLine = ""
     console.print(buildString)
 
-ASCIICHARS = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ".", ","]
-def resizeImage(image, resizeFactor):
-    width, height = image.size
-    newWidth = int(width/resizeFactor)
-    newHeight = int(height/resizeFactor)
-    resizedImage = image.resize((newWidth, newHeight))
-    return(resizedImage)
+def removeThing(what, fromWhat):
+    # removes all occurrences of a thing from a list
+    replacementList = []
+    for x in range(0, len(fromWhat)):
+        if what != fromWhat[x]:
+            replacementList.append(fromWhat[x])
+    return(replacementList)
 
-def convertToASCII(imagePath, resizeFactor):
-    try:
-        image = PIL.Image.open(imagePath)
-    except:
-        print("{} is not a valid path".format(imagePath))
-    newImageData = pixelsToASCII(makeGreyscale(resizeImage(image, resizeFactor)))
-    pixelCount = len(newImageData)
-    ASCIIimage = "\n".join(newImageData[i:(i+10)] for i in range(0, pixelCount))
-    pyperclip.copy(ASCIIimage)
+def removeChar(what, fromWhat):
+    #removes all occurrences of a thing from a string and returns the new string
+    replacementString = ""
+    for x in range(0, len(fromWhat)):
+        if what != fromWhat[x]:
+            replacementString += fromWhat[x]
+    return(replacementString)
 
+def removePunctuations(fromWhat):
+    replacementString = ""
+    punctuations = [".", ",", "\"", ";", ":", "!", "?", "*", "/"]
+    for x in range(0, len(fromWhat)):
+        if not fromWhat[x] in  punctuations:
+            replacementString += fromWhat[x]
+    return(replacementString)
 
-def makeGreyscale(image):
-    greyscaleImage = image.convert("L")
-    return(greyscaleImage)
-
-def pixelsToASCII(image):
-    pixels = image.getdata()
-    characters = "".join([ASCIICHARS[pixel//25] for pixel in pixels])
-    return(characters)
+def plotLaTex(thing):
+    plt.plot()
+    plt.text(0.0, 0.0,'$%s$'%thing)
+    plt.show()

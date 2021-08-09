@@ -17,3 +17,12 @@ wordCount = dtools.generateListOfListsByOccurence(stringList)
 dtools.iteratePrintList(wordCount, "num")
 testString = "This is a simple string with spaces that I want to see if it can properly print it takes up 2 lines so it should do it well"
 dtools.betterPrint(testString, "t2")
+removeTest = ["dog", "john", "youtube", "linux", "google", "microsoft"]
+print("list before removal: {}".format(removeTest))
+removeTest = dtools.removeThing("youtube", removeTest)
+print("list after removal: {}".format(removeTest))
+wordWithPeriod = "characters."
+print("String before removing period: {}".format(wordWithPeriod))
+wordWithoutPeriod = dtools.removeChar(".", wordWithPeriod)
+print("String after removing period: {}".format(wordWithoutPeriod))
+dtools.plotLaTex("\\frac{\omega}{2}")
