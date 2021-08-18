@@ -1,3 +1,5 @@
+import time
+import pyautogui
 import pyperclip
 import os
 import dmath
@@ -6,7 +8,7 @@ from rich.console import Console
 
 externalProgramsList = ["mudaeGui", "dtools", "latexBuilder", "binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 
-knownCommandsList = ["ascii", "vim", "rb", "commands", "speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+knownCommandsList = ["wc", "wordcount", "vim", "rb", "commands", "speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 
 console = Console()
 
@@ -59,6 +61,10 @@ def getUniqueWords(workingList):
         if not workingList[x] in uniqueWords:
             uniqueWords.append(workingList[x])
     return(uniqueWords)
+
+def wordCount(thing):
+    thingList = thing.split()
+    return(len(thingList))
 
 def generateListOfListsByOccurence(workingList):
     uniqueWords = getUniqueWords(workingList)
@@ -148,8 +154,6 @@ def detectExternalProgramAlias(entered):
             return("calculator")
         elif entered == "latexbuilder" or entered == "latex":
             return("latexBuilder")
-        elif entered == "mg" or entered == "mudaeg":
-            return("mudaeGui")
     else:
         return(entered)
 
@@ -272,3 +276,13 @@ def plotLaTex(thing):
     plt.plot()
     plt.text(0.0, 0.0,'$%s$'%thing)
     plt.show()
+
+def engageTextbar(): #for mudae
+    pyautogui.moveTo(730, 1023)
+    time.sleep(0.3)
+    pyautogui.click()
+
+def handleExpression(thing):
+    thingList = thing.split()
+    # PEMDAS 
+

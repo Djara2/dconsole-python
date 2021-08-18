@@ -58,3 +58,22 @@ def divides(divisor, dividend):
     else:
         return(False)
 
+def simplifyFraction(n, d):
+    if n > d:
+        x = d
+    elif d > n:
+        x = n
+    found = False
+    foundValue = "none"
+    while found == False:
+        if divides(x, n) and divides(x, d):   
+            found = True
+            foundValue = x
+        else:
+            x-=1
+    newN = n/foundValue
+    newD = d/foundValue
+    return(newN, newD)
+
+
+

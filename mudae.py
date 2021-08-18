@@ -1,9 +1,9 @@
 import os
 import time
 import pyautogui
-import mudaeGui
 from rich.console import Console
 from rich.markdown import Markdown
+import dtools
 console = Console()
 TEXTBAR = [730, 1023, 810, 1154]
 # for TEXTBAR, indices 0 and 1 are for the HP laptop and 2 and 3 are for the virtual machine
@@ -69,7 +69,7 @@ while True:
         time.sleep(0.5)
         pyautogui.press("enter")
         time.sleep(0.5)
-        mudaeGui.engageTextbar()
+        dtools.engageTextbar()
         time.sleep(0.5)
         pyautogui.hotkey("alt", "tab")
         pyautogui
@@ -93,7 +93,4 @@ while True:
         time.sleep(2)
         pyautogui.moveTo(FINALVOTE[0], FINALVOTE[1])
         pyautogui.click()
-        
-
-
 

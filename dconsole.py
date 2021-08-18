@@ -4,7 +4,7 @@ import time
 if len(sys.argv) == 1:
     import pyautogui
 else:
-    if sys.argv[1] == "np":
+    if sys.argv[1] == "mobile":
         input("Pyautogui will not be imported ")
 from rich.console import Console
 from rich.markdown import Markdown
@@ -16,8 +16,8 @@ from colors import *
 from dbin import *
 import dtools
 import pyperclip
-header = "version 1 . 83"
-header2 = "last updated: 08/07/2021" # TIME STAMP
+header = "version 1 . 85"
+header2 = "last updated: 08/18/2021" # TIME STAMP
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
@@ -28,7 +28,6 @@ history = []
 numbers = []
 binaries = []
 new = dnum(1, 1, 1)
-sendTerminateSignal = False
 
 def defaultDisplay():
     global console, mdTITLE
@@ -39,7 +38,7 @@ def defaultDisplay():
     print("Type \"help\" for options\n")
 
 def logic(enteredList):
-    global sendTerminateSignal, knowncmd, history, numbers, binaries, stoptext, new, header, externalPrograms, entered
+    global knowncmd, history, numbers, binaries, stoptext, new, header, externalPrograms, entered
     print()
     
     if enteredList[0] in externalPrograms:
@@ -56,9 +55,28 @@ def logic(enteredList):
     if enteredList[0] == "quit" or enteredList[0] == "exit":
         exit()
 
+    elif enteredList[0] == "wordcount" or enteredList[0] == "wc":
+        thing = input("String to count: ")
+        count = dtools.wordCount(thing)
+        console.print("[bold green]Word count:[/] {} [{} unique words]".format(count, len(dtools.getUniqueWords(thing.split()))))
+        reprint = input("Show word numbers? ")
+        if reprint == "y":
+            thingList = thing.split()
+            for x in range(0, len(thingList)):
+                thingList[x] = "({}){}".format(x+1, thingList[x])
+            buildString = ""
+            for x in range(0, len(thingList)):
+                if x != len(thingList)-1:
+                    buildString += "{} ".format(thingList[x])
+                else:
+                    buildString += thingList[x]
+            console.print("[bold green]With word numbers:[/] {}".format(buildString))
+        stop = input(stoptext)
+    
     elif enteredList[0] == "ascii":
         dtools.convertToASCII("penguin.png", 10)
         stop = input(stoptext)
+    
     elif enteredList[0] == "speedtest":
         os.system("./speedtest.sh")
         stop = input(stoptext)

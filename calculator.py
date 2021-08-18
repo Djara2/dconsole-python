@@ -40,7 +40,7 @@ Options.add_row("programs", "sin", "add", "area")
 Options.add_row("mode", "cos", "sub", "surfacearea")
 Options.add_row("func", "tan", "mult", "volume")
 Options.add_row("2nd", "", "div", "")
-Options.add_row("", "", "pow", "")
+Options.add_row("expression", "", "pow", "")
 Options.add_row("", "", "sqrt", "")
 # end 
 #
@@ -65,7 +65,7 @@ console = Console()
 inputHistory = []
 outputHistory = []
 externalPrograms = ["discount", "tip", "bt"]
-knowncmd = ["mode", "range", "func", "functions", "2nd", "1st", "programs", "srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+knowncmd = ["simplifyfrac", "expression", "mode", "range", "func", "functions", "2nd", "1st", "programs", "srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
 
 for x in range(0, len(externalPrograms)):
     knowncmd.append(externalPrograms[x])
@@ -89,7 +89,7 @@ def derivative(arg):
 def sum(arg, lower, upper):
     #first figure out how it is that the user has entered their function.
     #as you know, the terminal will accept something like 4x^2+13x^3 which will then be split up into a list with the delimiter being "+". 
-    #There are a few possibilities:
+    #There are a few possibilities
         # x
         # x^2
         # 4x
@@ -203,6 +203,21 @@ def logic(enteredList):
         outputHistory.append("opened {}".format(enteredList[0]))
         update_historyTable()
     
+    elif enteredList[0] == "simplifyfrac":
+        if len(enteredList) != 1:
+            n, d = dmath.simplifyFraction(float(enteredList[1]), float(enteredList[2]))
+        else:
+            n = input("Numerator: ")
+            d = input("Denominator: ")
+            n, d = dmath.simplifyFraction(n, d)
+        console.print("[bold green]Simplified fraction:[/] {}/{}".format(n, d))
+
+    elif enteredList[0] == "expression":
+        console.print("[bold yellow]Expression formatting rules are explained in help page.[/]")
+        expression = input("Enter the expression: ")
+
+
+
     elif enteredList[0] == "programs":
         console.print(Programs)
         outputHistory.append("displayed programs list")
