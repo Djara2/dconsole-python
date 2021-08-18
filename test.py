@@ -26,3 +26,9 @@ print("String before removing period: {}".format(wordWithPeriod))
 wordWithoutPeriod = dtools.removeChar(".", wordWithPeriod)
 print("String after removing period: {}".format(wordWithoutPeriod))
 dtools.plotLaTex("\\frac{\omega}{2}")
+string1 = "1234"
+list3 = [1, 2, 3, 4]
+print(string1)
+print(dtools.reverseString(string1))
+print(list3)
+print(dtools.reverseList(list3))

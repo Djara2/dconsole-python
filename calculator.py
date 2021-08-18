@@ -6,16 +6,50 @@ from rich.console import Console
 from rich.markdown import Markdown
 from rich.table import Table
 from colors import *
+import dtools
+modeList = ["Trigonometry Units"]
+trigUnits = "degree"
+trigStatuses = ["degree", "radian"]
+tableMode = 1
 os.system("clear")
+# 2nd mode table
+Options2 = Table(title="Options (2nd)")
+Options2.add_column("Special")
+Options2.add_column("Trigonometry")
+Options2.add_column("Operators")
+Options2.add_column("Geometry")
+Options2.add_row("programs", "[bold cyan]arcsin[/]", "[bold cyan]sum[/]", "area")
+Options2.add_row("mode", "[bold cyan]arcos[/]", "sub", "surfacearea")
+Options2.add_row("func", "[bold cyan]arctan[/]", "mult", "volume")
+Options2.add_row("[bold cyan]1st[/]", "", "div", "")
+Options2.add_row("", "", "pow", "")
+Options2.add_row("", "", "sqrt", "")
+
+# programs table
+Programs = Table(title="Programs")
+Programs.add_column("discount")
+Programs.add_column("tip")
+Programs.add_column("bt (binomial theorem)")
+# new table layout test
+Options = Table(title="Options")
+Options.add_column("Special")
+Options.add_column("Trigonometry")
+Options.add_column("Operators")
+Options.add_column("Geometry")
+Options.add_row("programs", "sin", "add", "area")
+Options.add_row("mode", "cos", "sub", "surfacearea")
+Options.add_row("func", "tan", "mult", "volume")
+Options.add_row("2nd", "", "div", "")
+Options.add_row("", "", "pow", "")
+Options.add_row("", "", "sqrt", "")
+# end 
+#
 Functions = Table(title="Functions")
-Functions.add_column("Normal")
-Functions.add_column("Special")
-Functions.add_row("add", "area")
-Functions.add_row("sub", "surfacearea")
-Functions.add_row("mult", "volume")
-Functions.add_row("div", "discount")
-Functions.add_row("sqrt", "tip")
-Functions.add_row("pow", "-")
+Functions.add_column("Ranges")
+Functions.add_column("Other")
+Functions.add_row("range", "choose")
+Functions.add_row("srir (squareRootsInRange)", "bt (binomial theorem)")
+Functions.add_row("psir (perfectSquaresInRange)", "factorial")
 ################
 historyTable = Table(title="History")
 historyTable.add_column("Index")
@@ -31,7 +65,7 @@ console = Console()
 inputHistory = []
 outputHistory = []
 externalPrograms = ["discount", "tip", "bt"]
-knowncmd = ["srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+knowncmd = ["mode", "range", "func", "functions", "2nd", "1st", "programs", "srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
 
 for x in range(0, len(externalPrograms)):
     knowncmd.append(externalPrograms[x])
@@ -138,6 +172,15 @@ def generateSumTable(fList, rList):
         sumTable.add_row(str(fList[x]), str(rList[x]))
     return(sumTable)
 
+def generateListInTableString(thing):
+    buildString = ""
+    for x in range(0, len(thing)):
+        if x != len(thing)-1:
+            buildString+="{}. {}\n".format(x+1, thing[x])
+        else:
+            buildString+="{}. {}".format(x+1, thing[x])
+    return(buildString)
+
 def update_historyTable():
     global history, outputHistory, historyTable
     index = len(history)
@@ -149,18 +192,148 @@ def update_historyTable():
     historyTable.add_row(index, h_annex, o_annex)
 
 def logic(enteredList):
-    global entered, knowncmd, history, twoDimensionalShapes, threeDimensionalShapes
+    global modeList, trigStatuses, trigUnits, tableMode, entered, knowncmd, history, twoDimensionalShapes, threeDimensionalShapes
     
     if not enteredList[0] in knowncmd:
         print("{}Error:{} {} is not a valid command.".format(RED, CLEAR, enteredList[0]))
         outputHistory.append("Error (command invalid)")
-        stop = input("Hit ENTER to continue ")
     
     elif enteredList[0] in externalPrograms:
         os.system("python3 {}.py".format(enteredList[0]))
         outputHistory.append("opened {}".format(enteredList[0]))
         update_historyTable()
     
+    elif enteredList[0] == "programs":
+        console.print(Programs)
+        outputHistory.append("displayed programs list")
+        update_historyTable()
+
+    elif enteredList[0] == "arcsin":
+        pass
+    
+    elif enteredList[0] == "mode":
+        trigStatusesString = generateListInTableString(trigStatuses)
+        tempTable = Table(title = "Settings")
+        tempTable.add_column("Index")
+        tempTable.add_column("Option")
+        tempTable.add_column("Current Status")
+        tempTable.add_column("Other Statuses")
+        for x in range(0, len(modeList)):
+            tempTable.add_row(str(x+1), modeList[x], trigUnits, trigStatusesString)
+        console.print(tempTable)
+        selection = input("Option to change (index)? ")
+        if selection != "exit" and selection != "quit":
+            selection = int(selection)
+            subSelection = input("Set to which status index? ")
+            subSelection = int(subSelection)
+            if selection == 1:
+                trigUnits = trigStatuses[subSelection-1]
+            print()
+            console.print("[bold green]Change set[/]")
+        else:
+            console.print("[bold green]Settings will not be changed")
+
+
+
+    
+    elif enteredList[0] == "2nd":
+        tableMode = 2
+        outputHistory.append("switched options table to 2nd mode")
+        update_historyTable()
+    
+    elif enteredList[0] == "1st":
+        tableMode = 1
+        outputHistory.append("switched options table to 1st mode")
+        update_historyTable()
+
+    elif enteredList[0] == "functions" or enteredList[0] == "func":
+        console.print(Functions)
+
+    elif enteredList[0] == "range":
+        functions = []
+        lowerBound = "a"
+        upperBound = "a"
+        repeat = True
+        while repeat:
+            coefficient = input("Coefficient of variable? ")
+            power = input("Power of variable? ")
+            constant = input("Constant? ")
+            if lowerBound == "a":
+                lowerBound = input("Lower bound?: ")
+                upperBound = input("Upper bound?: ")
+            try:
+                coefficient = float(coefficient)
+                power = float(power)
+                constant = float(constant)
+                lowerBound = int(lowerBound)
+                upperBound = int(upperBound)
+                functions.append([coefficient, power, constant])
+                repeat = input("Continue? ")
+                if repeat == "y":
+                    repeat = True
+                else:
+                    repeat = False
+            except:
+                console.print("[bold red]Error:[/] entries must be float or integer")
+                outputHistory.append("Error on range entry")
+                update_historyTable()
+        titleString = "Function Range"
+        tempTable = Table(title=titleString)
+        tempTable.add_column("x")
+        for x in range(0, len(functions)):
+            tempTable.add_column("{}x^{}+{}".format(functions[x][0], functions[x][1], functions[x][2]))
+        if len(functions) == 1:
+            for x in range(lowerBound, upperBound+1):
+                result = pow(x, power)
+                result *= coefficient
+                result += constant
+                tempTable.add_row("x={}".format(x), str(result))
+        elif len(functions) == 2:
+            for x in range(lowerBound, upperBound+1):
+                f1result = pow(x, functions[0][1])
+                f1result *= functions[0][0]
+                f1result += functions[0][2]
+                f2result = pow(x, functions[1][1])
+                f2result *= functions[1][0]
+                f2result += functions[1][2]
+                tempTable.add_row(str(x), str(f1result), str(f2result))
+        elif len(functions) == 3:
+            for x in range(lowerBound, upperBound+1):
+                f1result = pow(x, functions[0][1])
+                f1result *= functions[0][0]
+                f1result += functions[0][2]
+                f2result = pow(x, functions[1][1])
+                f2result *= functions[1][0]
+                f2result += functions[1][2]
+                f3result = pow(x, functions[2][1])
+                f3result *= functions[2][0]
+                f3result += functions[2][2]
+                tempTable.add_row(str(x), str(f1result), str(f2result), str(f3result))
+        elif len(functions) == 4:
+            for x in range(lowerBound, upperBound+1):
+                f1result = pow(x, functions[0][1])
+                f1result *= functions[0][0]
+                f1result += functions[0][2]
+                f2result = pow(x, functions[1][1])
+                f2result *= functions[1][0]
+                f2result += functions[1][2]
+                f3result = pow(x, functions[2][1])
+                f3result *= functions[2][0]
+                f3result += functions[2][2]
+                f4result = pow(x, functions[3][1])
+                f4result *= functions[3][0]
+                f4result += functions[3][2]
+                tempTable.add_row(str(x), str(f1result), str(f2result), str(f3result), str(f4result))
+
+
+        console.print(tempTable)
+        if len(functions) == 1:
+            outputHistory.append("range table for function {}x^{}+{}".format(coefficient, power, constant))
+        else:
+            outputHistory.append("range table for {} functions".format(len(functions)))
+        update_historyTable()
+
+
     elif enteredList[0] == "choose":
         if(len(enteredList) != 1):
             n = enteredList[1]
@@ -455,6 +628,7 @@ def logic(enteredList):
             print("\nThe area is {} units^2".format(area))
             print()
             stop = input("Hit ENTER to continue ")
+    stop = input("Hit ENTER to continue ")
 
         
 #MAIN FUNCTION
@@ -462,7 +636,10 @@ while(True):
     os.system("clear")
     console.print(MD_TITLE)
     print()
-    console.print(Functions, historyTable)
+    if tableMode == 1:
+        console.print(Options, historyTable)
+    else:
+        console.print(Options2, historyTable)
     print()
     #print("{}add:{} add     {}sub:{}  subtract     {}mult:{} multiply".format(GREEN, CLEAR, GREEN, CLEAR, GREEN, CLEAR))
     #print("{}div:{} divide  {}sqrt:{} square root  {}pow: {} power".format(GREEN, CLEAR, GREEN, CLEAR, GREEN, CLEAR))

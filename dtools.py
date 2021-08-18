@@ -14,6 +14,22 @@ def generateClickableLink(link, altText):
     linkString = "\x1b]8;;https://{}/\a{}\x1b]8;;\a".format(link, altText)
     return(linkString)
 
+def reverseList(thing):
+    newList = []
+    x = len(thing)-1
+    while x != -1:
+        newList.append(thing[x])
+        x-=1
+    return(newList)
+
+def reverseString(thing):
+    newString = ""
+    x = len(thing)-1
+    while x != -1:
+        newString += thing[x]
+        x-=1
+    return(newString)
+
 def whereIs(thing, somethingElse):
     # function to find a thing in an object
     found = False
