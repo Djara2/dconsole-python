@@ -65,7 +65,7 @@ console = Console()
 inputHistory = []
 outputHistory = []
 externalPrograms = ["discount", "tip", "bt"]
-knowncmd = ["simplifyfrac", "expression", "mode", "range", "func", "functions", "2nd", "1st", "programs", "srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+knowncmd = ["sin", "arcsin", "cos", "tan", "arccos", "arctan", "sec", "csc", "simplifyfrac", "expression", "mode", "range", "func", "functions", "2nd", "1st", "programs", "srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
 
 for x in range(0, len(externalPrograms)):
     knowncmd.append(externalPrograms[x])
@@ -223,8 +223,58 @@ def logic(enteredList):
         outputHistory.append("displayed programs list")
         update_historyTable()
 
+    elif enteredList[0] == "sin" or enteredList[0] == "cos" or enteredList[0] == "tan":
+        if len(enteredList) == 1:
+            if enteredList[0] == "sin":
+                enteredList.append(input("sin of: "))
+                history[len(history)-1] = "sin {}".format(enteredList[1])
+            elif enteredList[0] == "cos":
+                enteredList.append(input("cos of: "))
+                history[len(history)-1] = "cos {}".format(enteredList[1])
+            elif enteredList[0] == "tan":
+                enteredList.append(input("tan of: "))
+                history[len(history)-1] = "tan {}".format(enteredList[1])
+        enteredList[1] = float(enteredList[1])
+        if trigUnits == "degree":
+            original = enteredList[1]
+            enteredList[1] = math.radians(enteredList[1])
+        if enteredList[0] == "sin":
+            result = math.sin(enteredList[1])
+        elif enteredList[0] == "cos":
+            result = math.cos(enteredList[1])
+        elif enteredList[0] == "tan":
+            result = math.tan(enteredList[1])
+        outputHistory.append(str(result))
+        update_historyTable()
+        if trigUnits == "degree":
+            if enteredList[0] == "sin":
+                console.print("Result: sin({} {}) = {}".format(original, trigUnits, result))
+            elif enteredList[0] == "cos":
+                console.print("Result: cos({} {}) = {}".format(original, trigUnits, result))
+            elif enteredList[0] == "tan":
+                console.print("Result: tan({} {}) = {}".format(original, trigUnits, result))
+        else:
+            if enteredList[0] == "sin":
+                console.print("Result: sin({} {}) = {}".format(enteredList[1], trigUnits, result))
+            elif enteredList[0] == "cos":
+                console.print("Result: cos({} {}) = {}".format(enteredList[1], trigUnits, result))
+            elif enteredList[0] == "tan":
+                console.print("Result: tan({} {}) = {}".format(enteredList[1], trigUnits, result))
     elif enteredList[0] == "arcsin":
-        pass
+        if len(enteredList) == 1:
+            enteredList.append(input("arcsin of: "))
+            history[len(history)-1] = "arcsin {}".format(enteredList[1])
+        enteredList[1] = float(enteredList[1])
+        if trigUnits == "degree":
+            original = enteredList[1]
+            enteredList[1] = math.radians(enteredList[1])
+        result = pow(math.sin(enteredList[1]), -1)
+        outputHistory.append(str(result))
+        update_historyTable()
+        if trigUnits == "degree":
+            console.print("Result: arcsin({} {}) = {}".format(original, trigUnits, result))
+        else:
+            console.print("Result: arcsin({} {}) = {}".format(enteredList[1], trigUnits, result))
     
     elif enteredList[0] == "mode":
         trigStatusesString = generateListInTableString(trigStatuses)

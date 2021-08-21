@@ -5,8 +5,9 @@ from rich.console import Console
 from rich.markdown import Markdown
 import dtools
 console = Console()
-TEXTBAR = [730, 1023, 810, 1154]
-# for TEXTBAR, indices 0 and 1 are for the HP laptop and 2 and 3 are for the virtual machine
+mode = input("Mode: ")
+TEXTBAR = [730, 1023, 810, 1154, 782, 960]
+# for TEXTBAR, indices 0 and 1 are for the HP laptop and 2 and 3 are for the virtual machine. 4 and 5 are for the zorin VM on scale mode set to 200%
 LINK = []
 LINK.append(818)
 LINK.append(802)
@@ -21,6 +22,29 @@ os.system("clear")
 console.print(MD_TITLE)
 entered = ""
 enteredList = []
+def focusChatbar():
+    global mode
+    if mode == "zorin 200":
+        time.sleep(0.3)
+        pyautogui.moveTo(TEXTBAR[4], TEXTBAR[5])
+        time.sleep(0.3)
+        pyautogui.click()
+    else:
+        time.sleep(0.3)
+        pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])
+        time.sleep(0.3)
+        pyautogui.click()
+    time.sleep(0.3)
+
+def goToMarry():
+    time.sleep(0.3)
+    pyautogui.hotkey("ctrl", "k")
+    time.sleep(0.3)
+    pyautogui.write("psycho")
+    time.sleep(0.3)
+    pyautogui.press("enter")
+    time.sleep(0.3)
+
 while True:
     entered = input("Command: ")
     enteredList = entered.split()
@@ -28,34 +52,33 @@ while True:
         exit()
     elif entered == "dk":
         pyautogui.hotkey("alt", "tab")
-        pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])
-        pyautogui.click()
+        goToMarry()
+        focusChatbar()
         pyautogui.write("$dk")
         pyautogui.press("enter")
         time.sleep(0.3)
         pyautogui.hotkey("alt", "tab")
     elif entered == "b" or entered == "start":
-        print("Starting in 5 seconds")
-        time.sleep(5)
-        pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])
-        pyautogui.click()
+        pyautogui.hotkey("alt", "tab")
+        goToMarry()
+        focusChatbar()
         for x in range(1, 15):
             pyautogui.write("$w")
             pyautogui.press("enter")
-            time.sleep(1.1)
+            time.sleep(1.5)
         pyautogui.write("$tu")
         pyautogui.press("enter")
     elif entered == "d" or entered == "dk":
         pyautogui.hotkey("alt", "tab")
-        pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])
-        pyautogui.click()
+        goToMarry()
+        focusChatbar()
         pyautogui.write("$dk")
         pyautogui.press("enter")
         pyautogui.hotkey("alt", "tab")
     elif entered == "tu" or entered == "t":
         pyautogui.hotkey("alt", "tab")
-        pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])
-        pyautogui.click()
+        goToMarry()
+        focusChatbar()
         pyautogui.write("$tu")
         pyautogui.press("enter")
         time.sleep(0.5)
