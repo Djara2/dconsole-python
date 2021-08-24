@@ -30,6 +30,7 @@ Programs = Table(title="Programs")
 Programs.add_column("discount")
 Programs.add_column("tip")
 Programs.add_column("bt (binomial theorem)")
+
 # new table layout test
 Options = Table(title="Options")
 Options.add_column("Special")
@@ -41,7 +42,7 @@ Options.add_row("mode", "cos", "sub", "surfacearea")
 Options.add_row("func", "tan", "mult", "volume")
 Options.add_row("2nd", "", "div", "")
 Options.add_row("expression", "", "pow", "")
-Options.add_row("", "", "sqrt", "")
+Options.add_row("convert units", "", "sqrt", "")
 # end 
 #
 Functions = Table(title="Functions")
@@ -65,7 +66,7 @@ console = Console()
 inputHistory = []
 outputHistory = []
 externalPrograms = ["discount", "tip", "bt"]
-knowncmd = ["sin", "arcsin", "cos", "tan", "arccos", "arctan", "sec", "csc", "simplifyfrac", "expression", "mode", "range", "func", "functions", "2nd", "1st", "programs", "srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+knowncmd = ["convert", "sin", "arcsin", "cos", "tan", "arccos", "arctan", "sec", "csc", "simplifyfrac", "expression", "mode", "range", "func", "functions", "2nd", "1st", "programs", "srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
 
 for x in range(0, len(externalPrograms)):
     knowncmd.append(externalPrograms[x])
@@ -216,8 +217,89 @@ def logic(enteredList):
         console.print("[bold yellow]Expression formatting rules are explained in help page.[/]")
         expression = input("Enter the expression: ")
 
+    elif enteredList[0] == "convert" and enteredList[1] == "units":
+        teaspoons = ["teaspoons", "teaspoon", "tsp", "tsps"]
+        tablespoons = ["tablespoons", "tablespoon", "tbsp", "tbsps"]
+        floz = ["fluid ounces", "fluid ounce", "floz", "flozs", "fl oz", "fl ozs"]
+        cups = ["cups", "cup"]
+        pints = ["pints", "pts", "pt", "pint"]
+        quarts = ["quarts", "qt", "qts", "quart"]
+        gallons = ["gallons", "gallon", "gal", "gals"]
+        console.print("\n[bold yellow]Please pick a measurement system:[/]\n1. Imperial\n2. Metric\n")
+        system = input("Measurement system: ")
+        if system == "1" or system == "imperial" or system == "Imperial":
+            console.print("\n[bold yellow]Please pick type of measurement:[/]\n\n1. Distance\n2. Volume\n")
+            measurementType = input("Measurement type: ")
+            if measurementType == "1":
+                measurementType = "distance"
+            elif measurementType == "2":
+                measurementType = "volume"
+            if measurementType == "distance":
+                console.print("\n[bold yellow]Please pick original units:[/]\n1. inches\n2. feet\n3. yards\n 4. miles")
+                original = input("Original units: ")
+                if original == "1":
+                    original = "inches"
+                elif original == "2":
+                    original = "feet"
+                elif original == "3":
+                    original = "yards"
+                elif original == "4":
+                    original = "miles"
+                console.print("\n[bold yellow]Please pick destination units:[/]\n1. inches\n2. feet\n3. yards\n 4. miles")
+                destination = input("Destination units: ")
+                if destination == "1":
+                    destination = "inches"
+                elif destination == "2":
+                    destination = "feet"
+                elif destination == "3":
+                    destination = "yards"
+                elif destination == "4":
+                    destination = "miles"
+                amt = input("Amount of {}: ".format(original))
+                amt = float(amt)
+            
+            elif measurementType == "volume":
+                console.print("\n[bold yellow]Please pick original units:[/]\n1. teaspoon (tsp)\n2. tablespoon (tbsp)\n3. fluid ounce (fl oz or oz)\n 4. cups\n5. pints (pt)\n6. quarts (qt)\n7. gallons (gal)\n")
+                original = input("Original units: ")
+                if original == "1" or original in teaspoons:
+                    original = "teaspoons"
+                elif original == "2" or original in tablespoons:
+                    original = "tablespoons"
+                elif original == "3" or original in floz: 
+                    original = "fluid ounces"
+                elif original == "4" or original == "cups" or original == "cup":
+                    original = "cups"
+                elif original == "5" or original in pints:
+                    original = "pints"
+                elif original == "6" or original in quarts:
+                    original = "quarts"
+                elif original == "7" or original in gallons:
+                    original = "gallons"
+                console.print("\n[bold yellow]Please pick destination units:[/]\n1. teaspoons (tsp)\n2. tablespoons (tbsp)\n3. fluid ounces (fl oz)\n 4. cups\n5. pints\n6. quarts\n7. gallons")
+                destination = input("Destination units: ")
+                if destination == "1" or destination in teaspoons:
+                    destination = "teaspoons"
+                elif destination == "2" or destination in tablespoons:
+                    destination = "tablespoons"
+                elif destination == "3" or destination in floz:
+                    destination = "fluid ounces"
+                elif destination == "4" or destination in cups:
+                    destination = "cups"
+                elif destination == "5" or destination in pints:
+                    destination = "pints"
+                elif destination == "6" or destination in quarts:
+                    destination = "quarts"
+                elif destination == "7" or destination in gallons:
+                    destination = "gallons"
+                amt = input("\nAmount of {}: ".format(original))
+                amt = float(amt)
 
-
+            result = dtools.imperialConvert(amt, original, destination)
+        else:
+            pass
+        console.print("\n[bold green]Result:[/] {} {}\n".format(result, destination))
+        
+    
     elif enteredList[0] == "programs":
         console.print(Programs)
         outputHistory.append("displayed programs list")

@@ -36,6 +36,13 @@ def focusChatbar():
         pyautogui.click()
     time.sleep(0.3)
 
+def writeEnter(thing):
+    time.sleep(0.3)
+    pyautogui.write(thing)
+    time.sleep(0.3)
+    pyautogui.press("enter")
+    time.sleep(0.3)
+
 def goToMarry():
     time.sleep(0.3)
     pyautogui.hotkey("ctrl", "k")
@@ -44,6 +51,21 @@ def goToMarry():
     time.sleep(0.3)
     pyautogui.press("enter")
     time.sleep(0.3)
+
+def altTab():
+    time.sleep(0.3)
+    pyautogui.hotkey("alt", "tab")
+    time.sleep(0.3)
+
+def daily():
+    altTab()
+    goToMarry()
+    focusChatbar()
+    writeEnter("$daily")
+    writeEnter("$rolls")
+    time.sleep(0.3)
+    altTab()
+
 
 while True:
     entered = input("Command: ")
@@ -68,6 +90,9 @@ while True:
             time.sleep(1.5)
         pyautogui.write("$tu")
         pyautogui.press("enter")
+    elif entered == "daily" or entered == "rolls" or entered == "dr":
+        daily()
+
     elif entered == "d" or entered == "dk":
         pyautogui.hotkey("alt", "tab")
         goToMarry()

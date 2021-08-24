@@ -12,6 +12,9 @@ knownCommandsList = ["wc", "wordcount", "vim", "rb", "commands", "speedtest", "b
 
 console = Console()
 
+def clear():
+    os.system("clear")
+
 def generateClickableLink(link, altText):
     linkString = "\x1b]8;;https://{}/\a{}\x1b]8;;\a".format(link, altText)
     return(linkString)
@@ -286,3 +289,188 @@ def handleExpression(thing):
     thingList = thing.split()
     # PEMDAS 
 
+def errorMessage(text):
+    console.print("[bold red]Error:[/] {}".format(text))
+
+def imperialConvert(amt, unit, destination):
+    result = -1
+    scalar = -1
+    dividing = True
+    errorText = "Unexpected conversion destination"
+    inList = ["in", "inch", "inches"]
+    ftList = ["ft", "feet"]
+    ydList = ["yd", "yards", "yds", "yard"]
+    miList = ["mi", "miles", "mile"]
+    if unit == "inches" or unit == "inch" or unit == "in":
+        if destination == "feet" or destination == "ft":
+            scalar = 12
+        elif destination == "yards" or destination == "yard" or destination == "yd" or destination == "yds":
+            scalar = 36
+        elif destination == "miles" or destination == "mile" or destination == "mi":
+            scalar = 63360
+        else:
+            console.print("[bold red]Error:[/]Unexpected conversion destination.")
+    
+    elif unit == "ft" or unit == "feet":
+        if destination == "in" or destination == "inches" or destination == "inch":
+            scalar = 12
+            dividing = False
+        elif destination == "yd" or destination == "yds" or destination == "yards" or destination == "yard":
+            scalar = 3
+        elif destination == "mi" or destination == "miles" or destination == "mile":
+            scalar = 5280
+        else:
+            errorMessage("Unexpected conversion destination")
+
+    elif unit == "yd" or unit == "yards" or unit == "yds" or unit == "yard":
+        if destination == "in" or destination == "inches" or destination == "inches":
+            scalar = 36
+            dividing = False
+        elif destination == "ft" or destination == "feet":
+            scalar = 3
+            dividing = False
+        elif destination == "mi" or destination == "miles" or destination == "mile":
+            scalar = 1760
+        else:
+            errorMessage(errorText)
+    
+    elif unit == "mi" or unit == "miles" or unit == "mile":
+        dividing = False
+        if destination in inList:
+            scalar = 63360
+        elif destination in ftList:
+            scalar = 5280
+        elif destination in ydList:
+            scalar = 1760
+        else:
+            errorMessage(errorText)
+    elif unit == "teaspoons":
+        if destination == "tablespoons":
+            scalar = 3
+        elif destination == "fluid ounces":
+            scalar = 6
+        elif destination == "cups":
+            scalar = 48
+        elif destination == "pints":
+            scalar = 96
+        elif destination == "quarts":
+            scalar = 192
+        elif destination == "gallons":
+            scalar = 768
+    elif unit == "tablespoons":
+        if destination == "teaspoons":
+            scalar = 3
+            dividing = False
+        elif destination == "fluid ounces":
+            scalar = 2                                                     
+        elif destination == "cups":                                        
+            scalar = 16
+        elif destination == "pints":
+            scalar = 32
+        elif destination == "quarts":
+            scalar = 64
+        elif destination == "gallons":
+            scalar = 256
+    elif unit == "fluid ounces":
+        if destination == "teaspoons":
+            scalar = 6
+            dividing = False
+        elif destination == "tablespoons":
+            scalar = 2
+            dividing = False
+        elif destination == "cups":                                        
+            scalar = 8
+        elif destination == "pints":
+            scalar = 16
+        elif destination == "quarts":
+            scalar = 32
+        elif destination == "gallons":
+            scalar = 128
+    elif unit == "cups":
+        if destination == "teaspoons":
+            scalar = 48
+            dividing = False
+        elif destination == "tablespoons":
+            scalar = 16
+            dividing = False
+        elif destination == "fluid ounces":
+            scalar = 8   
+            dividing = False
+        elif destination == "pints":                                    
+            scalar = 2
+        elif destination == "quarts":
+            scalar = 4
+        elif destination == "gallons":
+            scalar = 16
+    elif unit == "pints":
+        if destination == "teaspoons":
+            scalar = 96
+            dividing = False
+        elif destination == "tablespoons":
+            scalar = 32
+            dividing = False
+        elif destination == "fluid ounces":
+            scalar = 16
+            dividing = False
+        elif destination == "cups":                                        
+            scalar = 2
+            dividing = False
+        elif destination == "quarts":
+            scalar = 2
+        elif destination == "gallons":
+            scalar = 8
+    elif unit == "quarts":
+        if destination == "teaspoons":
+            scalar = 192
+            dividing = False
+        elif destination == "tablespooons":
+            scalar = 64
+            dividing = False
+        elif destination == "fluid ounces":
+            scalar = 32
+            dividing = False
+        elif destination == "cups":                                        
+            scalar = 4
+            dividing = False
+        elif destination == "pints":
+            scalar = 2
+            dividing = False
+        elif destination == "gallons":
+            scalar = 4
+    elif unit == "gallons":
+        if destination == "teaspoons":
+            scalar = 768
+            dividing = False
+        elif destination == "tablespooons":
+            scalar = 256
+            dividing = False
+        elif destination == "fluid ounces":
+            scalar = 128
+            dividing = False
+        elif destination == "cups":                                        
+            scalar = 16
+            dividing = False
+        elif destination == "pints":
+            scalar = 8
+            dividing = False
+        elif destination == "quarts":
+            scalar = 4
+            dividing = False
+            
+
+            
+
+
+            
+
+
+            
+
+
+    else:
+        errorMessage("Either the unit parameter or the destination parameter was wrong. It is possible both were not entered correctly.")
+    if dividing == True:
+        result = amt/scalar
+    else:
+        result = amt*scalar
+    return(result)

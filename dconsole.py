@@ -16,8 +16,8 @@ from colors import *
 from dbin import *
 import dtools
 import pyperclip
-header = "version 1 . 85"
-header2 = "last updated: 08/18/2021" # TIME STAMP
+header = "version 1 . 86"
+header2 = "last updated: 08/23/2021" # TIME STAMP
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
@@ -99,15 +99,17 @@ def logic(enteredList):
     
     elif enteredList[0] == "vim":
         if len(enteredList) == 1:
+            console.print("[bold cyan]Frequently used:[/] 7. dtools")
             dtools.iteratePrintList(externalPrograms, "num1")
-            console.print("[bold cyan]Enter \"none\" to rollback[/]")
+            console.print("[bold cyan]Enter \"none\" or leave blank to rollback[/]")
             argument = input("Edit which file?: ")
-            if argument == "none":
+            if argument == "none" or argument == "":
                 print("Exiting selection process.")
             else:
                 os.system("vim {}.py".format(externalPrograms[int(argument)-1]))
         else:
-            os.system("vim {}.py".format(externalPrograms[int(arguments)-1]))
+            argument = enteredList[1]
+            os.system("vim {}.py".format(externalPrograms[int(argument)-1]))
         stop = input(stoptext)
     elif enteredList[0] == "programs":
         dtools.iteratePrintList(externalPrograms, "num1")
