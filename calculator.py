@@ -225,8 +225,10 @@ def logic(enteredList):
         pints = ["pints", "pts", "pt", "pint"]
         quarts = ["quarts", "qt", "qts", "quart"]
         gallons = ["gallons", "gallon", "gal", "gals"]
-        console.print("\n[bold yellow]Please pick a measurement system:[/]\n1. Imperial\n2. Metric\n")
+        
+        console.print("\n[bold yellow]Please pick a measurement system:[/]\n\n1. Imperial\n2. Metric\n3. Imperial to Metric\n4. Metric to Imperial\n")
         system = input("Measurement system: ")
+        
         if system == "1" or system == "imperial" or system == "Imperial":
             console.print("\n[bold yellow]Please pick type of measurement:[/]\n\n1. Distance\n2. Volume\n")
             measurementType = input("Measurement type: ")
@@ -295,8 +297,84 @@ def logic(enteredList):
                 amt = float(amt)
 
             result = dtools.imperialConvert(amt, original, destination)
-        else:
-            pass
+        
+        elif system == "2" or system.lower() == "metric":
+            console.print("\n[bold yellow]Please pick type of measurement:[/]\n\n1. Distance\n2. Volume\n")
+            measurementType = input("Measurement type: ")
+            if measurementType == "1":
+                measurementType = "distance"
+            elif measurementType == "2":
+                measurementType = "volume"
+            if measurementType == "distance":
+                console.print("\n[bold yellow]Please pick original units:[/]\n1. picometers\n2. nanometers\n3. micrometers\n 4. millimeters\n5. centimeters\n6. decimeters\n7. meters\n8. dekameters\n9. hectometers\n10. kilometers\n11. megameters\n12. gigameters\n13. terameters")
+                original = input("Original units: ")
+                if original == "1" or original == "picometers":
+                    original = "picometers"
+                elif original == "2" or original == "nanometers":
+                    original = "nanometers"
+                elif original == "3" or original == "micrometers":
+                    original = "micrometers"
+                elif original == "4" or original == "millimeters":
+                    original = "millimeters"
+                elif original == "5" or original == "centimeters" or original == "cm" or original == "centi":
+                    original = "centimeters"
+                elif original == "6" or original == "decimeters" or original == "decimeter" or original == "deci":
+                    original = "decimeters"
+                elif original == "7" or original == "meters" or original == "meter" or original == "m":
+                    original = "meters"
+                elif original == "8" or original == "dekameters" or original == "deka" or original == "dekameter":
+                    original = "dekameters"
+                elif original == "9" or original == "hectometers" or original == "hecto" or original == "hectometer":
+                    original = "hectometers"
+                elif original == "10" or original == "kilometers" or original == "km" or original == "kilo" or original == "kilometer":
+                    original = "kilometers"
+                elif original == "11" or original == "megameters" or original == "mega" or original == "megameter":
+                    original == "megameters"
+                elif original == "12" or original == "gigameters" or original == "giga" or original == "gigameter":
+                    original == "gigameters"
+                elif original == "13" or original == "tera" or original == "terameters" or original == "terameter":
+                    original == "terameters"
+
+                elif original == "13" or original == "tera" or original == "terameters" or original == "terameter":
+                    original == "terameters"
+
+                console.print("\n[bold yellow]Please pick destination units:[/]\n1. inches\n2. feet\n3. yards\n 4. miles")
+                destination = input("Destination units: ")
+                if destination == "1" or destination == "picometers":
+                    destination = "picometers"
+                elif destination == "2" or destination == "nanometers":
+                    destination = "nanometers"
+                elif destination == "3" or destination == "micrometers":
+                    destination = "micrometers"
+                elif destination == "4" or destination == "millimeters":
+                    destination = "millimeters"
+                elif destination == "5" or destination == "centimeters" or destination == "cm" or destination == "centi":
+                    destination = "centimeters"
+                elif destination == "6" or destination == "decimeters" or destination == "decimeter" or destination == "deci":
+                    destination = "decimeters"
+                elif destination == "7" or destination == "meters" or destination == "meter" or destination == "m":
+                    destination = "meters"
+                elif destination == "8" or destination == "dekameters" or destination == "deka" or destination == "dekameter":
+                    destination = "dekameters"
+                elif destination == "9" or destination == "hectometers" or destination == "hecto" or destination == "hectometer":
+                    destination = "hectometers"
+                elif destination == "10" or destination == "kilometers" or destination == "km" or destination == "kilo" or destination == "kilometer":
+                    destination = "kilometers"
+                elif destination == "11" or destination == "megameters" or destination == "mega" or destination == "megameter":
+                    destination == "megameters"
+                elif destination == "12" or destination == "gigameters" or destination == "giga" or destination == "gigameter":
+                    destination == "gigameters"
+                elif destination == "13" or destination == "tera" or destination == "terameters" or destination == "terameter":
+                    destination == "terameters"
+
+                elif destination == "13" or destination == "tera" or destination == "terameters" or destination == "terameter":
+                    destination == "terameters"
+                amt = input("Amount of {}: ".format(original))
+                amt = float(amt)
+            result = dtools.metricConvert(amt, original, destination)
+
+
+
         console.print("\n[bold green]Result:[/] {} {}\n".format(result, destination))
         
     
@@ -369,7 +447,7 @@ def logic(enteredList):
             tempTable.add_row(str(x+1), modeList[x], trigUnits, trigStatusesString)
         console.print(tempTable)
         selection = input("Option to change (index)? ")
-        if selection != "exit" and selection != "quit":
+        if selection != "exit" and selection != "quit" and selection != "":
             selection = int(selection)
             subSelection = input("Set to which status index? ")
             subSelection = int(subSelection)

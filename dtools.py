@@ -6,7 +6,7 @@ import dmath
 import matplotlib.pyplot as plt
 from rich.console import Console
 
-externalProgramsList = ["mudaeGui", "dtools", "latexBuilder", "binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+externalProgramsList = ["markdownwriter", "mudaeGui", "dtools", "latexBuilder", "binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 
 knownCommandsList = ["wc", "wordcount", "vim", "rb", "commands", "speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 
@@ -209,7 +209,7 @@ def handleSpecialChars(workingList, specialChars):
                 workingList[x] = "\\geq"
             
             elif workingList[x] == "abt" or workingList[x] == "approx" or workingList[x] == "about":
-                workingList[x] = "\\approx"
+                 workingList[x] = "\\approx"
             
             elif workingList[x] == "subset" or workingList[x] == "sub":
                 workingList[x] = "\\subset"
@@ -456,17 +456,135 @@ def imperialConvert(amt, unit, destination):
         elif destination == "quarts":
             scalar = 4
             dividing = False
-            
 
-            
+    else:
+        errorMessage("Either the unit parameter or the destination parameter was wrong. It is possible both were not entered correctly.")
+    if dividing == True:
+        result = amt/scalar
+    else:
+        result = amt*scalar
+    return(result)
 
+def metricConvert(amt, unit, destination):
+    result = -1
+    scalar = -1
+    dividing = True
+    errorText = "Unexpected conversion destination"
+    if unit == "picometers":
+        if destination == "nanometers":
+            scalar = 1000
+        elif destination == "micrometers":
+            scalar = pow(10, 6)
+        elif destination == "millimeters":
+            scalar = pow(10, 9)
+        elif destination == "centimeters":
+            scalar = pow(10, 10)
+        elif destination == "decimeters":
+            scalar = pow(10, 11)
+        elif destination == "meters":
+            scalar = pow(10, 12)
+        elif destination == "dekameters":
+            scalar = pow(10, 13)
+        elif destination == "hectometers":
+            scalar = pow(10, 14)
+        elif destination == "kilometers":
+            scalar = pow(10, 15)
+        elif destination == "megameters":
+            scalar = pow(10, 18)
+        elif destination == "gigameters":
+            scalar = pow(10, 21)
+        elif destination == "terameters":
+            scalar = pow(10, 24)
+        else:
+            console.print("[bold red]Error:[/]Unexpected conversion destination.")
+    elif unit == "nanometers":
+        if destination == "picometers":
+            scalar = 1000
+            dividing = False
+        elif destination == "micrometers":
+            scalar = 1000
+        elif destination == "millimeters":
+            scalar = 1000000
+        elif destination == "centimeters":
+            scalar = 10000000
+        elif destination == "decimeters":
+            scalar = 100000000
+        elif destination == "meters":
+            scalar = pow(10, 9)
+        elif destination == "dekameters":
+            scalar = pow(10, 10)
+        elif destination == "hectometers":
+            scalar = pow(10, 11)
+        elif destination == "kilometers":
+            scalar = pow(10, 12)
+        elif destination == "megameters":
+            scalar = pow(10, 15)
+        elif destination == "gigameters":
+            scalar = pow(10, 18)
+        elif destination == "terameters":
+            scalar = pow(10, 21)
+        else:
+            console.print("[bold red]Error:[/]Unexpected conversion destination.")
+    elif unit == "micrometers":
+        if destination == "picometers":
+            scalar = pow(10, 6)
+            dividing = False
+        elif destination == "nanometers":
+            scalar = 1000
+            dividing = False
+        elif destination == "millimeters":
+            scalar = 1000
+        elif destination == "centimeters":
+            scalar = 10000
+        elif destination == "decimeters":
+            scalar = 100000
+        elif destination == "meters":
+            scalar = 1000000
+        elif destination == "dekameters":
+            scalar = 10000000
+        elif destination == "hectometers":
+            scalar = 100000000
+        elif destination == "kilometers":
+            scalar = pow(10, 9)
+        elif destination == "megameters":
+            scalar = pow(10, 12)
+        elif destination == "gigameters":
+            scalar = pow(10, 15)
+        elif destination == "terameters":
+            scalar = pow(10, 18)
+        else:
+            console.print("[bold red]Error:[/]Unexpected conversion destination.")
 
-            
-
-
-            
-
-
+    if unit == "millimeters":
+        if destination == "picometers":
+            scalar = pow(10, 9)
+            dividing = False
+        elif destination == "nanometers":
+            scalar = 1000000
+            dividing = False
+        elif destination == "micrometers":
+            scalar = 1000
+            dividing = False
+        elif destination == "centimeters":
+            scalar = 10
+        elif destination == "decimeters":
+            scalar = 100
+        elif destination == "meters":
+            scalar = 1000
+        elif destination == "dekameters":
+            scalar = 10000
+        elif destination == "hectometers":
+            scalar = 100000
+        elif destination == "kilometers":
+            scalar = pow(10, 6)
+        elif destination == "megameters":
+            scalar = pow(10, 9)
+        elif destination == "gigameters":
+            scalar = pow(10, 12)
+        elif destination == "terameters":
+            scalar = pow(10, 15)
+        else:
+            console.print("[bold red]Error:[/]Unexpected conversion destination.")
     else:
         errorMessage("Either the unit parameter or the destination parameter was wrong. It is possible both were not entered correctly.")
     if dividing == True:
