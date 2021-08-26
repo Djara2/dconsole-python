@@ -15,7 +15,7 @@ from dnum import *
 from colors import *
 from dbin import *
 import dtools
-import pyperclip
+import pyclip
 header = "version 1 . 86"
 header2 = "last updated: 08/23/2021" # TIME STAMP
 os.system("clear")
@@ -41,9 +41,12 @@ def logic(enteredList):
     global knowncmd, history, numbers, binaries, stoptext, new, header, externalPrograms, entered
     print()
     
-    if enteredList[0] in externalPrograms:
+    if enteredList[0].lower() in externalPrograms:
         cmd = "python3 {}.py".format(enteredList[0])
-        os.system(cmd)
+        try:
+            os.system(cmd)
+        except:
+            dtools.errorMessage("no such program.")
         print()
         stop = input(stoptext)
     
@@ -71,10 +74,6 @@ def logic(enteredList):
                 else:
                     buildString += thingList[x]
             console.print("[bold green]With word numbers:[/] {}".format(buildString))
-        stop = input(stoptext)
-    
-    elif enteredList[0] == "ascii":
-        dtools.convertToASCII("penguin.png", 10)
         stop = input(stoptext)
     
     elif enteredList[0] == "speedtest":
@@ -111,6 +110,7 @@ def logic(enteredList):
             argument = enteredList[1]
             os.system("vim {}.py".format(externalPrograms[int(argument)-1]))
         stop = input(stoptext)
+    
     elif enteredList[0] == "programs":
         dtools.iteratePrintList(externalPrograms, "num1")
         stop = input("\n"+stoptext)
@@ -135,7 +135,7 @@ def logic(enteredList):
     elif enteredList[0] == "hre":
         index = int(enteredList[1])
         itemToCopy = history[index-1]
-        pyperclip.copy(itemToCopy)
+        pyclip.copy(itemToCopy)
         print("\"{}\" has been copied to the clipboard. Paste from clipboard or type \"v\" on the input line to automatically paste.".format(itemToCopy))
         stop = input("Hit ENTER to continue ")
     
@@ -175,7 +175,7 @@ def logic(enteredList):
         stop = input(stoptext)
 
     elif enteredList[0] == "v":
-        copied = pyperclip.paste()
+        copied = pyclip.paste()
         copiedList = copied.split()
         print("Entered previously copied command: {}".format(copied))
         logic(copiedList)

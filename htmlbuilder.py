@@ -2,7 +2,7 @@ from rich.console import Console
 from rich.markdown import Markdown
 from rich.table import Table
 import os
-import pyperclip
+import pyclip
 console = Console()
 MD_TITLE = Markdown("# HTML Builder")
 while(True):
@@ -51,7 +51,7 @@ while(True):
                 print("I didn't recognize you. Please enter \"yes\" or \"no\"")
         workingTable+="\n\t</tbody>\n</table>"
         print(workingTable)
-        pyperclip.copy(workingTable)
+        pyclip.copy(workingTable)
         stop = input("Hit ENTER to continue")
         quit()
 

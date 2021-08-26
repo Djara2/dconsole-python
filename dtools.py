@@ -6,7 +6,7 @@ import dmath
 import matplotlib.pyplot as plt
 from rich.console import Console
 
-externalProgramsList = ["markdownwriter", "mudaeGui", "dtools", "latexBuilder", "binToDec", "decToBin", "mudae", "bt", "richbuilder", "htmlBuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+externalProgramsList = ["genblankapp", "markdownwriter", "mudaeGui", "dtools", "latexBuilder", "bintodec", "dectobin", "mudae", "bt", "richbuilder", "htmlbuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 
 knownCommandsList = ["wc", "wordcount", "vim", "rb", "commands", "speedtest", "binToDec", "decToBin", "h", "mudae", "binomial theorem", "bt", "richbuilder", "htmlBuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 
@@ -344,6 +344,7 @@ def imperialConvert(amt, unit, destination):
             scalar = 1760
         else:
             errorMessage(errorText)
+    
     elif unit == "teaspoons":
         if destination == "tablespoons":
             scalar = 3
@@ -357,6 +358,7 @@ def imperialConvert(amt, unit, destination):
             scalar = 192
         elif destination == "gallons":
             scalar = 768
+    
     elif unit == "tablespoons":
         if destination == "teaspoons":
             scalar = 3
@@ -371,6 +373,7 @@ def imperialConvert(amt, unit, destination):
             scalar = 64
         elif destination == "gallons":
             scalar = 256
+    
     elif unit == "fluid ounces":
         if destination == "teaspoons":
             scalar = 6
@@ -386,6 +389,7 @@ def imperialConvert(amt, unit, destination):
             scalar = 32
         elif destination == "gallons":
             scalar = 128
+    
     elif unit == "cups":
         if destination == "teaspoons":
             scalar = 48
@@ -402,6 +406,7 @@ def imperialConvert(amt, unit, destination):
             scalar = 4
         elif destination == "gallons":
             scalar = 16
+    
     elif unit == "pints":
         if destination == "teaspoons":
             scalar = 96
@@ -419,6 +424,7 @@ def imperialConvert(amt, unit, destination):
             scalar = 2
         elif destination == "gallons":
             scalar = 8
+    
     elif unit == "quarts":
         if destination == "teaspoons":
             scalar = 192
@@ -437,6 +443,7 @@ def imperialConvert(amt, unit, destination):
             dividing = False
         elif destination == "gallons":
             scalar = 4
+    
     elif unit == "gallons":
         if destination == "teaspoons":
             scalar = 768
@@ -497,6 +504,7 @@ def metricConvert(amt, unit, destination):
             scalar = pow(10, 24)
         else:
             console.print("[bold red]Error:[/]Unexpected conversion destination.")
+    
     elif unit == "nanometers":
         if destination == "picometers":
             scalar = 1000
@@ -525,6 +533,7 @@ def metricConvert(amt, unit, destination):
             scalar = pow(10, 21)
         else:
             console.print("[bold red]Error:[/]Unexpected conversion destination.")
+    
     elif unit == "micrometers":
         if destination == "picometers":
             scalar = pow(10, 6)

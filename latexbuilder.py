@@ -1,6 +1,6 @@
 import os
 import dtools
-import pyperclip
+import pyclip
 quitKeywords = ["exit", "quit", "ex", "eit", "eixt"]
 os.system("clear")
 from rich.console import Console
@@ -139,9 +139,9 @@ def logic(entered, enteredList):
                 buildString += denominator[x][y]
                 buildString += " "
         buildString += "}$"
-        usePyperclip = input("Does your system work with Pyperclip?: ")
+        usePyperclip = input("Does your system work with Pyclip?: ")
         if usePyperclip == "y":
-            pyperclip.copy(buildString)
+            pyclip.copy(buildString)
         print()
         printOutput = input("Print result to console?: ")
         if printOutput == "y":
@@ -206,9 +206,9 @@ def logic(entered, enteredList):
         buildString += "\\end{"
         buildString += matrixType
         buildString += "}$"
-        useClipboard = input("Does your system work with pyperclip?: ")
+        useClipboard = input("Does your system work with pyclip?: ")
         if useClipboard == "y":
-            pyperclip.copy(buildString)
+            pyclip.copy(buildString)
         printBuild = input("Print result to console?: ")
         if printBuild == "y":
             print(buildString)
@@ -218,7 +218,7 @@ def logic(entered, enteredList):
 
 while True:
     defaultDisplay()
-    entered = input("What kind of LaTex entity are you trying to build? ")
+    entered = input("What kind of LaTex entity are you trying to build?: ")
     enteredList = []
     logic(entered, enteredList)
     stop = input("Hit ENTER to continue ")

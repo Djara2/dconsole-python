@@ -3,7 +3,7 @@ from rich.markdown import Markdown
 from rich.table import Table
 import keyboard
 import os
-import pyperclip
+import pyclip
 os.system("clear")
 console = Console()
 MD_TITLE = Markdown("# Rich (Python Library) Builder")
@@ -46,7 +46,7 @@ while(True):
                 print("I did not recognize your input. Please enter yes, y, no, or n.")
         print()
         print(work)
-        pyperclip.copy(work)
+        pyclip.copy(work)
         stop = input("Hit ENTER to continue ")
 
 
