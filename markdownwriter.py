@@ -27,7 +27,15 @@ def logic(entered, enteredList):
             buildString = dtools.addToFront("**", buildString)
             buildString += "**"
         console.print("\n[bold green]Result:[/] {}".format(buildString))
-        pyclip.copy(buildString)
+        wsl = input("Are you on WSL?: ")
+        if wsl == "n":
+            pyclip.copy(buildString)
+        else:
+            file_obj = open("temp.txt", "w")
+            file_obj.write(buildString)
+            file_obj.close()
+            os.system("cat temp.txt | clip.exe")
+            os.system("rm temp.txt")
         console.print("\nResult has been copied to clipboard!")
     elif entered == "help":
         dtools.clear()

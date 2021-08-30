@@ -6,7 +6,7 @@ from rich.markdown import Markdown
 import dtools
 console = Console()
 mode = input("Mode: ")
-TEXTBAR = [730, 1023, 810, 1154, 782, 960]
+TEXTBAR = [730, 1023, 810, 1154, 782, 960, 858, 1896]
 # for TEXTBAR, indices 0 and 1 are for the HP laptop and 2 and 3 are for the virtual machine. 4 and 5 are for the zorin VM on scale mode set to 200%
 LINK = []
 LINK.append(818)
@@ -19,43 +19,55 @@ CONFIRM = [924, 907]
 FINALVOTE = [955, 568]
 MD_TITLE = Markdown("# Mudae Autoplayer")
 os.system("clear")
+DURATION = 0.3
+if mode.lower() == "lm" or mode.lower() == "lmvm":
+    DURATION = 0.6
 console.print(MD_TITLE)
 entered = ""
 enteredList = []
+def wait():
+    global DURATION
+    time.sleep(DURATION)
+
 def focusChatbar():
     global mode
     if mode == "zorin 200":
-        time.sleep(0.3)
+        wait()
         pyautogui.moveTo(TEXTBAR[4], TEXTBAR[5])
-        time.sleep(0.3)
+        wait()
+        pyautogui.click()
+    elif mode.lower() == "lmvm" or mode.lower() == "lm":
+        wait()
+        pyautogui.moveTo(TEXTBAR[6], TEXTBAR[7])
+        wait()
         pyautogui.click()
     else:
-        time.sleep(0.3)
+        wait()
         pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])
-        time.sleep(0.3)
+        wait()
         pyautogui.click()
-    time.sleep(0.3)
+    wait()
 
 def writeEnter(thing):
-    time.sleep(0.3)
+    wait()
     pyautogui.write(thing)
-    time.sleep(0.3)
+    wait()
     pyautogui.press("enter")
-    time.sleep(0.3)
+    wait()
 
 def goToMarry():
-    time.sleep(0.3)
+    wait()
     pyautogui.hotkey("ctrl", "k")
-    time.sleep(0.3)
+    wait()
     pyautogui.write("psycho")
-    time.sleep(0.3)
+    wait()
     pyautogui.press("enter")
-    time.sleep(0.3)
+    wait()
 
 def altTab():
-    time.sleep(0.3)
+    wait()
     pyautogui.hotkey("alt", "tab")
-    time.sleep(0.3)
+    wait()
 
 def daily():
     altTab()
@@ -63,7 +75,7 @@ def daily():
     focusChatbar()
     writeEnter("$daily")
     writeEnter("$rolls")
-    time.sleep(0.3)
+    wait()
     altTab()
 
 def nav():
@@ -75,16 +87,12 @@ while True:
     enteredList = entered.split()
     if entered == "quit" or entered == "exit":
         exit()
-    elif entered == "dk":
-        pyautogui.hotkey("alt", "tab")
-        goToMarry()
-        focusChatbar()
-        pyautogui.write("$dk")
-        pyautogui.press("enter")
-        time.sleep(0.3)
-        pyautogui.hotkey("alt", "tab")
     elif entered == "b" or entered == "start":
-        pyautogui.hotkey("alt", "tab")
+        if mode != "lmvm" and mode != "lm":
+            altTab()
+        else:
+            print("5 seconds to switch to Discord")
+            time.sleep(5)
         goToMarry()
         focusChatbar()
         for x in range(1, 15):
@@ -97,14 +105,22 @@ while True:
         daily()
 
     elif entered == "d" or entered == "dk":
-        pyautogui.hotkey("alt", "tab")
+        if mode != "lm" and mode != "lmvm":
+            pyautogui.hotkey("alt", "tab")
+        else:
+            print("5 seconds to switch to channel")
+            time.sleep(5)
         goToMarry()
         focusChatbar()
         pyautogui.write("$dk")
         pyautogui.press("enter")
         pyautogui.hotkey("alt", "tab")
     elif entered == "tu" or entered == "t":
-        pyautogui.hotkey("alt", "tab")
+        if mode != "lm" and mode != "lmvm":
+            pyautogui.hotkey("alt", "tab")
+        else:
+            print("5 seconds to switch to Discord")
+            time.sleep(5)
         goToMarry()
         focusChatbar()
         pyautogui.write("$tu")
