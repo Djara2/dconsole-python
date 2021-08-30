@@ -35,6 +35,11 @@ def reverseString(thing):
         x-=1
     return(newString)
 
+def addToFront(new, thing):
+    buildString = new
+    buildString += thing
+    return(buildString)
+
 def whereIs(thing, somethingElse):
     # function to find a thing in an object
     found = False
@@ -151,12 +156,14 @@ def iteratePrintList(workingList, mode):
 
 def detectExternalProgramAlias(entered):
     # pass in the variable "entered" in dconsole. Set it equal to the return of this function. The function will return the "official" name if an alias is detected. Otherwise it will return what was passed in.
-    aliases = ["calc", "latexbuilder", "latex", "mg", "mudaeg"]
+    aliases = ["md", "markdown", "calc", "latexbuilder", "latex", "mg", "mudaeg"]
     if entered in aliases:
         if entered == "calc":
             return("calculator")
         elif entered == "latexbuilder" or entered == "latex":
             return("latexBuilder")
+        elif entered == "md" or entered == "markdown":
+            return("markdownwriter")
     else:
         return(entered)
 

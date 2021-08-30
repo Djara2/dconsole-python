@@ -66,6 +66,9 @@ def daily():
     time.sleep(0.3)
     altTab()
 
+def nav():
+    altTab()
+    goToMarry()
 
 while True:
     entered = input("Command: ")
@@ -109,18 +112,12 @@ while True:
         time.sleep(0.5)
         pyautogui.hotkey("alt", "tab")
     elif entered == "nav":
-        pyautogui.hotkey("win", "4")
-        time.sleep(0.5)
-        pyautogui.hotkey("ctrl", "k")
-        time.sleep(0.5)
-        pyautogui.write("psycho")
-        time.sleep(0.5)
-        pyautogui.press("enter")
-        time.sleep(0.5)
-        dtools.engageTextbar()
-        time.sleep(0.5)
-        pyautogui.hotkey("alt", "tab")
-        pyautogui
+        altTab()
+        goToMarry()
+
+    elif entered == "at":
+        altTab()
+
     elif entered == "vote":
         pyautogui.hotkey("alt", "tab")
         pyautogui.moveTo(TEXTBAR[0], TEXTBAR[1])

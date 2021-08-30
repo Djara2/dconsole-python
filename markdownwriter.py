@@ -22,6 +22,10 @@ def logic(entered, enteredList):
         color = input("Which color?: ")
         text = input("Text to be stylized: ")
         buildString = "<span style = \"color: {}\">{}</span>".format(color, text)
+        makeBold = input("Make bold?: ")
+        if makeBold == "y":
+            buildString = dtools.addToFront("**", buildString)
+            buildString += "**"
         console.print("\n[bold green]Result:[/] {}".format(buildString))
         pyclip.copy(buildString)
         console.print("\nResult has been copied to clipboard!")
