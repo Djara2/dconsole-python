@@ -8,7 +8,6 @@ import pyclip
 import dtools
 console = Console()
 MD_TITLE = Markdown("# Markdown Writer")
-
 def defaultDisplay():
     os.system("clear")
     console.print(MD_TITLE)
@@ -31,11 +30,7 @@ def logic(entered, enteredList):
         if wsl == "n":
             pyclip.copy(buildString)
         else:
-            file_obj = open("temp.txt", "w")
-            file_obj.write(buildString)
-            file_obj.close()
-            os.system("cat temp.txt | clip.exe")
-            os.system("rm temp.txt")
+            dtools.wslCopy(buildString)
         console.print("\nResult has been copied to clipboard!")
     elif entered == "help":
         dtools.clear()
