@@ -3,6 +3,7 @@ from rich.markdown import Markdown
 from rich.table import Table
 import os
 import pyclip
+import dtools
 console = Console()
 MD_TITLE = Markdown("# HTML Builder")
 while(True):
@@ -51,7 +52,11 @@ while(True):
                 print("I didn't recognize you. Please enter \"yes\" or \"no\"")
         workingTable+="\n\t</tbody>\n</table>"
         print(workingTable)
-        pyclip.copy(workingTable)
+        wsl = input("Are you on WSL?: ")
+        if wsl != "y":
+            pyclip.copy(workingTable)
+        else:
+            dtools.wslCopy(workingTable)
         stop = input("Hit ENTER to continue")
         quit()
 
