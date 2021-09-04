@@ -230,12 +230,15 @@ def logic(enteredList):
         system = input("Measurement system: ")
         
         if system == "1" or system == "imperial" or system == "Imperial":
-            console.print("\n[bold yellow]Please pick type of measurement:[/]\n\n1. Distance\n2. Volume\n")
+            console.print("\n[bold yellow]Please pick type of measurement:[/]\n\n1. Distance\n2. Volume\n3. Temperature\n")
             measurementType = input("Measurement type: ")
             if measurementType == "1":
                 measurementType = "distance"
             elif measurementType == "2":
                 measurementType = "volume"
+            elif measurementType == "3":
+                measurementType = "temperature"
+            
             if measurementType == "distance":
                 console.print("\n[bold yellow]Please pick original units:[/]\n1. inches\n2. feet\n3. yards\n 4. miles")
                 original = input("Original units: ")
@@ -260,6 +263,18 @@ def logic(enteredList):
                 amt = input("Amount of {}: ".format(original))
                 amt = float(amt)
             
+            elif measurementType == "temperature":
+                original = "fahrenheit"
+                console.print("[bold yellow]What destination units?[/]\n\n1. Celsius\n2. Kelvin\n\n")
+                destination = input("Which one?: ")
+                if destination == "1":
+                    destination = "celsius"
+                elif destination == "2":
+                    destination = "kelvin"
+                else:
+                    destination = destination.lower()
+                amt = input("Amount of degrees {}?: ".format(original))
+                amt = float(amt)
             elif measurementType == "volume":
                 console.print("\n[bold yellow]Please pick original units:[/]\n1. teaspoon (tsp)\n2. tablespoon (tbsp)\n3. fluid ounce (fl oz or oz)\n 4. cups\n5. pints (pt)\n6. quarts (qt)\n7. gallons (gal)\n")
                 original = input("Original units: ")
@@ -296,7 +311,10 @@ def logic(enteredList):
                 amt = input("\nAmount of {}: ".format(original))
                 amt = float(amt)
 
-            result = dtools.imperialConvert(amt, original, destination)
+            if measurementType != "temperature":
+                result = dtools.imperialConvert(amt, original, destination)
+            else:
+                result = dtools.tempConvert(amt, original, destination)
         
         elif system == "2" or system.lower() == "metric":
             console.print("\n[bold yellow]Please pick type of measurement:[/]\n\n1. Distance\n2. Volume\n")

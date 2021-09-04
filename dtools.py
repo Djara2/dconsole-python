@@ -313,6 +313,26 @@ def handleExpression(thing):
 def errorMessage(text):
     console.print("[bold red]Error:[/] {}".format(text))
 
+def tempConvert(amt, original, destination):
+    result = -1
+    if original == "fahrenheit":
+        if destination == "celsius":
+            result = amt - 32
+            result *= 5
+            result /= 9
+        elif destination == "kelvin":
+            result = amt -  32
+            result *= 5
+            result /= 5
+            result += 273.15
+    elif original == "celsius":
+        if destination == "fahrenheit":
+            result = amt * 1.8
+            result += 32
+        elif destination == "kelvin":
+            result = amt + 273.15
+        
+    return(result)
 def imperialConvert(amt, unit, destination):
     result = -1
     scalar = -1

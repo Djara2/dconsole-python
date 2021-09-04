@@ -91,8 +91,8 @@ while True:
         if mode != "lmvm" and mode != "lm":
             altTab()
         else:
-            print("5 seconds to switch to Discord")
-            time.sleep(5)
+            print("3 seconds to switch to Discord")
+            time.sleep(3)
         goToMarry()
         focusChatbar()
         for x in range(1, 15):
@@ -108,8 +108,8 @@ while True:
         if mode != "lm" and mode != "lmvm":
             pyautogui.hotkey("alt", "tab")
         else:
-            print("5 seconds to switch to channel")
-            time.sleep(5)
+            print("3 seconds to switch to channel")
+            time.sleep(3)
         goToMarry()
         focusChatbar()
         pyautogui.write("$dk")
@@ -119,8 +119,8 @@ while True:
         if mode != "lm" and mode != "lmvm":
             pyautogui.hotkey("alt", "tab")
         else:
-            print("5 seconds to switch to Discord")
-            time.sleep(5)
+            print("3 seconds to switch to Discord")
+            time.sleep(3)
         goToMarry()
         focusChatbar()
         pyautogui.write("$tu")
