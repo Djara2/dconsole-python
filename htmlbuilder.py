@@ -6,6 +6,7 @@ import pyclip
 import dtools
 console = Console()
 MD_TITLE = Markdown("# HTML Builder")
+QUIT_KEYWORDS = ["exit", "quit", "eit", "eixt", "qiut"]
 while(True):
     os.system("clear")
     console.print(MD_TITLE)
@@ -15,7 +16,9 @@ while(True):
     print()
     entered = input("> ")
     entered = entered.lower()
-    if(entered == "table"):
+    if entered in QUIT_KEYWORDS:
+        quit()
+    elif(entered == "table"):
         workingTable = "<table>\n\t<thead>\n\t\t<tr>\n\t\t\t<th colspan=\""
         rows = 0
         columns = 0
@@ -31,9 +34,9 @@ while(True):
             operation = input("Column {} (header {}) label?: ".format(x+1, x+1))
             headers.append(operation)
             if x != rows-1:
-                workingTable+="{}</td>\n\t\t\t<td>".format(operation)
+                workingTable+="<strong>{}</td>\n\t\t\t<td>".format(operation)
             else:
-                workingTable+="{}</td>\n\t\t</tr>".format(operation)
+                workingTable+="<strong>{}</td>\n\t\t</tr>".format(operation)
         building = True
         while(building):
             operation = input("Add another row?: ")

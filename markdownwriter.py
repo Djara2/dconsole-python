@@ -19,9 +19,13 @@ def logic(entered, enteredList):
     buildString = ""
     if entered in quitKeywords:
         exit()
-    elif entered == "add color":
+    elif entered == "add color" or entered == "color" or entered == "ac":
         color = input("Which color?: ")
         text = input("Text to be stylized: ")
+        if color == "green":
+            color = "#8eb398"
+        if color == "red":
+            color = "#cd3333"
         buildString = "<span style = \"color: {}\">{}</span>".format(color, text)
         makeBold = input("Make bold?: ")
         if makeBold == "y":
@@ -34,6 +38,16 @@ def logic(entered, enteredList):
         else:
             dtools.wslCopy(buildString)
         console.print("\nResult has been copied to clipboard!")
+    
+    elif entered == "notice" or entered == "note":
+        buildString = "**<span style=\"background-color: yellow; color: black\">{}:</span> ".format(entered)
+        buildString += input("{}: ")
+        wsl = input("Are you on WSL?: ")
+        if wsl != "y":
+            pyclip.copy(buildString)
+        else:
+            dtools.wslCopy(buildString)
+
     elif entered == "citation":
         buildString = "**<span style=\"color: yellow\">Citation:</span>** "
         if len(enteredList) == 1:
@@ -59,8 +73,15 @@ def logic(entered, enteredList):
         result_statement(buildString)
     elif entered == "highlight":
         color = input("Which color?: ")
+        if color == "green":
+            color = "#7e9f87"
+        elif color == "red":
+            color = "#cd3333" 
         text = input("Text to be stylized?: ")
-        buildString = "<span style=\"background-color: {}\">{}</span>".format(color, text)
+        if color != "yellow":
+            buildString = "<span style=\"background-color: {}\">{}</span>".format(color, text)
+        else:
+            buildString = "<span style=\"background-color: yellow; color: black\">{}</span>".format(text)
         makeBold = input("Make bold?: ")
         if makeBold == "y":
             buildString = dtools.addToFront("**", buildString)

@@ -170,7 +170,7 @@ def iteratePrintList(workingList, mode):
 
 def detectExternalProgramAlias(entered):
     # pass in the variable "entered" in dconsole. Set it equal to the return of this function. The function will return the "official" name if an alias is detected. Otherwise it will return what was passed in.
-    aliases = ["help", "md", "markdown", "calc", "latexbuilder", "latex", "mg", "mudaeg"]
+    aliases = ["html", "help", "md", "markdown", "calc", "latexbuilder", "latex", "mg", "mudaeg"]
     if entered in aliases:
         if entered == "calc":
             return("calculator")
@@ -180,6 +180,8 @@ def detectExternalProgramAlias(entered):
             return("latexbuilder")
         elif entered == "md" or entered == "markdown":
             return("markdownwriter")
+        elif entered == "html":
+            return("htmlbuilder")
     else:
         return(entered)
 
