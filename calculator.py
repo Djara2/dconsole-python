@@ -5,6 +5,7 @@ import dmath
 from rich.console import Console
 from rich.markdown import Markdown
 from rich.table import Table
+import pyclip
 from colors import *
 import dtools
 modeList = ["Trigonometry Units"]
@@ -66,7 +67,8 @@ console = Console()
 inputHistory = []
 outputHistory = []
 externalPrograms = ["discount", "tip", "bt"]
-knowncmd = ["convert", "sin", "arcsin", "cos", "tan", "arccos", "arctan", "sec", "csc", "simplifyfrac", "expression", "mode", "range", "func", "functions", "2nd", "1st", "programs", "srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+knowncmd = ["copy", "convert", "sin", "arcsin", "cos", "tan", "arccos", "arctan", "sec", "csc", "simplifyfrac", "expression", "mode", "range", "func", "functions", "2nd", "1st", "programs", "srir", "squareRootsInRange", "psir", "perfectsquaresinrange", "sum", "choose", "factorial", "area", "volume", "surfacearea", "quit", "exit", "add", "sub", "mult", "div", "sqrt", "pow", "mod", "history"]
+
 
 for x in range(0, len(externalPrograms)):
     knowncmd.append(externalPrograms[x])
@@ -204,6 +206,18 @@ def logic(enteredList):
         outputHistory.append("opened {}".format(enteredList[0]))
         update_historyTable()
     
+    elif enteredList[0] == "copy":
+        mode = input("Are you on WSL?: ")
+        #try:
+        index = int(enteredList[1])
+        copy = str(outputHistory[index-1])
+        if mode != "y":
+            pyclip.copy(copy)
+        else:
+            dtools.wslCopy(copy)
+        console.print("[bold green]Copied:[/] {}".format(outputHistory[int(enteredList[1])-1]))
+        #except:
+            #dtools.errorMessage("Please provide an index of the output history listing to copy.")
     elif enteredList[0] == "simplifyfrac":
         if len(enteredList) != 1:
             n, d = dmath.simplifyFraction(float(enteredList[1]), float(enteredList[2]))

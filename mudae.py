@@ -6,7 +6,7 @@ from rich.markdown import Markdown
 import dtools
 console = Console()
 mode = input("Mode: ")
-TEXTBAR = [730, 1023, 810, 1154, 782, 960, 858, 1896]
+TEXTBAR = [730, 1023, 810, 1154, 782, 960, 858, 1896, 906, 932]
 # for TEXTBAR, indices 0 and 1 are for the HP laptop and 2 and 3 are for the virtual machine. 4 and 5 are for the zorin VM on scale mode set to 200%
 LINK = []
 LINK.append(818)
@@ -39,6 +39,11 @@ def focusChatbar():
     elif mode.lower() == "lmvm" or mode.lower() == "lm":
         wait()
         pyautogui.moveTo(TEXTBAR[6], TEXTBAR[7])
+        wait()
+        pyautogui.click()
+    elif mode.lower() == "pm" or mode.lower() == "pmvm":
+        wait()
+        pyautogui.moveTo(TEXTBAR[8], TEXTBAR[9])
         wait()
         pyautogui.click()
     else:

@@ -16,8 +16,8 @@ from colors import *
 from dbin import *
 import dtools
 import pyclip
-header = "version 1 . 86"
-header2 = "last updated: 08/23/2021" # TIME STAMP
+header = "version 1 . 87"
+header2 = "last updated: 09/09/2021" # TIME STAMP
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "
@@ -35,7 +35,7 @@ def defaultDisplay():
     console.print(mdTITLE)
     print(header)
     print(header2+"\n")
-    print("Type \"help\" for options\n")
+    console.print("Type [bold green]\"help\"[/] for options\n")
 
 def logic(enteredList):
     global knowncmd, history, numbers, binaries, stoptext, new, header, externalPrograms, entered
@@ -58,6 +58,8 @@ def logic(enteredList):
     if enteredList[0] == "quit" or enteredList[0] == "exit":
         exit()
 
+    elif entered == "help":
+        os.system("python3 neohelp.py")
     elif enteredList[0] == "wordcount" or enteredList[0] == "wc":
         thing = input("String to count: ")
         count = dtools.wordCount(thing)

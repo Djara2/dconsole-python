@@ -7,9 +7,9 @@ import dmath
 import matplotlib.pyplot as plt
 from rich.console import Console
 ALPHABET = ["a", "b", "c", "d", "e","f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-externalProgramsList = ["genblankapp", "markdownwriter", "mudaeGui", "dtools", "latexbuilder", "bintodec", "dectobin", "mudae", "bt", "richbuilder", "htmlbuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
+externalProgramsList = ["neohelp", "genblankapp", "markdownwriter", "mudaeGui", "dtools", "latexbuilder", "bintodec", "dectobin", "mudae", "bt", "richbuilder", "htmlbuilder", "w3mh", "changelog", "discount", "search", "calculator", "tip", "help"]
 
-knownCommandsList = ["wc", "wordcount", "vim", "rb", "commands", "speedtest", "bintodec", "dectobin", "h", "mudae", "binomial theorem", "bt", "latexbuilder", "richbuilder", "htmlbuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
+knownCommandsList = ["help", "wc", "wordcount", "vim", "rb", "commands", "speedtest", "bintodec", "dectobin", "h", "mudae", "binomial theorem", "bt", "latexbuilder", "richbuilder", "htmlbuilder", "programs", "translate" "programs", "len", "discount", "help", "exit", "quit", "history", "hre", "new", "numbers", "v", "discount", "system", "os", "search", "calculator", "tip", "w3m"]
 
 console = Console()
 
@@ -170,10 +170,12 @@ def iteratePrintList(workingList, mode):
 
 def detectExternalProgramAlias(entered):
     # pass in the variable "entered" in dconsole. Set it equal to the return of this function. The function will return the "official" name if an alias is detected. Otherwise it will return what was passed in.
-    aliases = ["md", "markdown", "calc", "latexbuilder", "latex", "mg", "mudaeg"]
+    aliases = ["help", "md", "markdown", "calc", "latexbuilder", "latex", "mg", "mudaeg"]
     if entered in aliases:
         if entered == "calc":
             return("calculator")
+        elif entered == "help":
+            return("neohelp")
         elif entered == "lb" or entered == "latex":
             return("latexbuilder")
         elif entered == "md" or entered == "markdown":
