@@ -206,9 +206,11 @@ def logic(entered, enteredList):
         buildString += "\\end{"
         buildString += matrixType
         buildString += "}$"
-        useClipboard = input("Does your system work with pyclip?: ")
-        if useClipboard == "y":
+        wsl = input("Are you on WSL?: ")
+        if wsl != "y":
             pyclip.copy(buildString)
+        else:
+            dtools.wslCopy(buildString)
         printBuild = input("Print result to console?: ")
         if printBuild == "y":
             print(buildString)
