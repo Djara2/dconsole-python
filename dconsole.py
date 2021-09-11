@@ -16,8 +16,8 @@ from colors import *
 from dbin import *
 import dtools
 import pyclip
-header = "version 1 . 87"
-header2 = "last updated: 09/09/2021" # TIME STAMP
+header = "version 1 . 88"
+header2 = "last updated: 09/10/2021" # TIME STAMP
 os.system("clear")
 console = Console() #from rich library
 stoptext = "Hit ENTER to continue "

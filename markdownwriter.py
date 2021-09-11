@@ -16,33 +16,78 @@ def result_statement(text):
     console.print("\n[bold green]Result:[/] {}".format(text))
     console.print("\n\"{}\" has been copied to the clipboard!\n".format(text))
 def logic(entered, enteredList):
+    PARAMETERS = ["-b", "-r", "-l", "-wsl"]
+    tempLen = len(PARAMETERS)
+    for x in range(0, tempLen):
+        PARAMETERS.append("-{}".format(PARAMETERS[x][1:len(PARAMETERS)-1].upper())) 
     buildString = ""
     if entered in quitKeywords:
         exit()
-    elif entered == "add color" or entered == "color" or entered == "ac":
-        color = input("Which color?: ")
-        text = input("Text to be stylized: ")
-        if color == "green":
+    elif entered == "add color" or enteredList[0] == "color" or enteredList[0] == "ac":
+        if not len(enteredList) > 1:
+            color = input("Which color?: ")
+        else:
+            color = enteredList[1]
+        if (enteredList[0] == "ac" and len(enteredList) > 2) or (enteredList[0] == "color" and len(enteredList) > 2):
+            text = ""
+            for x in range(2, len(enteredList)):
+                if enteredList[x] != "-l" and enteredList[x] != "-wsl" and enteredList[x] != "-b" and enteredList[x] != "-r":
+                    text += "{}".format(enteredList[x])
+                    if x != len(enteredList)-1:
+                        text += " "
+        else:
+            text = input("Text to be stylized: ")
+        if color == "green" or color == "g":
             color = "#8eb398"
-        if color == "red":
+        elif color == "red" or color == "r":
             color = "#cd3333"
+        elif color == "y":
+            color = "yellow"
+        elif color == "c":
+            color = "cyan"
+        if text[len(text)-1] == " ":
+            text = text[0:len(text)-1]
         buildString = "<span style = \"color: {}\">{}</span>".format(color, text)
-        makeBold = input("Make bold?: ")
+        if not "-b" in entered:
+            if not "-r" in entered:
+                makeBold = input("Make bold?: ")
+            else:
+                makeBold = "n"
+        else:
+            makeBold = "y"
         if makeBold == "y":
             buildString = dtools.addToFront("**", buildString)
             buildString += "**"
         console.print("\n[bold green]Result:[/] {}".format(buildString))
-        wsl = input("Are you on WSL?: ")
+        if not "-wsl" in entered:
+            if not "-l" in entered:
+                wsl = input("Are you on WSL?: ")
+            else:
+                wsl = "n"
+        else:
+            wsl = "y"
         if wsl == "n":
             pyclip.copy(buildString)
         else:
             dtools.wslCopy(buildString)
         console.print("\nResult has been copied to clipboard!")
     
-    elif entered == "notice" or entered == "note":
-        buildString = "**<span style=\"background-color: yellow; color: black\">{}:</span> ".format(entered)
-        buildString += input("{}: ")
-        wsl = input("Are you on WSL?: ")
+    elif enteredList[0].lower() == "notice" or enteredList[0].lower() == "note":
+        buildString = "**<span style=\"background-color: yellow; color: black\">{}:</span> ".format(enteredList[0])
+        if len(enteredList) < 2:
+            buildString += input("{}: ")
+        else:
+            for x in range(1, len(enteredList)):
+                buildString += "{}".format(enteredList[x])
+                if x != len(enteredList)-1:
+                    buildString += " "
+        if not "-wsl" in entered:
+            if not "-l" in entered:
+                wsl = input("Are you on WSL?: ")
+            else:
+                wsl = "n"
+        else:
+            wsl = "y"
         if wsl != "y":
             pyclip.copy(buildString)
         else:
@@ -50,15 +95,17 @@ def logic(entered, enteredList):
 
     elif entered == "citation":
         buildString = "**<span style=\"color: yellow\">Citation:</span>** "
-        if len(enteredList) == 1:
-            wsl = input("Are you on WSL?: ")
-            if wsl != "y":
-                pyclip.copy(buildString)
+        if not "-wsl" in entered:
+            if not "-l" in entered:
+                wsl = input("Are you on WSL?: ")
             else:
-                dtools.wslCopy(buildString)
+                wsl = "n"
         else:
-            if enteredList[1] == "wsl":
-                dtools.wslCopy(buildString)
+            wsl = "y"
+        if wsl != "y":
+            pyclip.copy(buildString)
+        else:
+            dtools.wslCopy(buildString)
         result_statement(buildString)
     elif entered == "table of contents" or entered == "toc" or entered == "contents":
         buildString = "${toc}"
@@ -71,23 +118,50 @@ def logic(entered, enteredList):
             else:
                 dtools.wslCopy(buildString)
         result_statement(buildString)
-    elif entered == "highlight":
-        color = input("Which color?: ")
-        if color == "green":
+    elif enteredList[0] == "highlight" or enteredList[0] == "hl":
+        if len(enteredList) == 1:
+            color = input("Which color?: ")
+        else:
+            color = enteredList[1]
+        if color == "green" or color == "g":
             color = "#7e9f87"
-        elif color == "red":
+        elif color == "red" or color == "r":
             color = "#cd3333" 
-        text = input("Text to be stylized?: ")
+        elif color == "y":
+            color = "yellow"
+        elif color == "c":
+            color = "cyan"
+        if len(enteredList) < 2:
+            text = input("Text to be stylized?: ")
+        else:
+            text = ""
+            for x in range(2, len(enteredList)):
+                if enteredList[x] != "-l" and enteredList[x] != "-wsl" and enteredList[x] != "-r" and enteredList[x] != "-b":
+                    text += "{}".format(enteredList[x])
+                    if x != len(enteredList)-1:
+                        text += " "
         if color != "yellow":
             buildString = "<span style=\"background-color: {}\">{}</span>".format(color, text)
         else:
             buildString = "<span style=\"background-color: yellow; color: black\">{}</span>".format(text)
-        makeBold = input("Make bold?: ")
+        if not "-b" in entered:
+            if not "-r" in entered:
+                makeBold = input("Make bold?: ")
+            else:
+                makeBold = "n"
+        else:
+            makeBold = "y"
         if makeBold == "y":
             buildString = dtools.addToFront("**", buildString)
             buildString += "**"
         console.print("\n[bold green]Result:[/] {}".format(buildString))
-        wsl = input("Are you on WSL?: ")
+        if not "-wsl" in entered:
+            if not "-l" in entered:
+                wsl = input("Are you on WSL?: ")
+            else:
+                wsl = "n"
+        else:
+            wsl = "y"
         if wsl == "n":
             pyclip.copy(buildString)
         else:
@@ -95,7 +169,7 @@ def logic(entered, enteredList):
         console.print("\nResult has been copied to clipboard!")
     elif entered == "help":
         dtools.clear()
-        console.print(Markdown("# Options\n* ***Add color:*** wraps text in HTML span tag so that you can have markdown with color.\n* ***Table:*** see htmlBuilder"))
+        console.print(Markdown("# Options\n* ***Add color:*** wraps text in HTML span tag so that you can have markdown with color.\n\t* Aliases: color, ac\n\n* ***Table:*** see htmlBuilder\n\n* **Highlight:** highlights the text you give it in a particular color that you specify.\n\t* Aliases: hl\n\n* **Citation:** copies the text \"citation:\" with bold weight and yellow color.\n\n* **Note:** copies \"Note:\" to the clipboard with bold weight and yellow color. If you give text after the command keyword then that will be inserted as well."))
     else:
         dtools.errorMessage("Invalid option")
 while True:
