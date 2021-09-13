@@ -15,6 +15,7 @@ def defaultDisplay():
 	
 
 def logic(entered, enteredList):
+    MATRICES = ["pmatrix", "pm", "bmatrix", "bm", "matrix", "m"]
     latexEntities = ["sqrt", "frac"]
     specialChars = ["<=", "=>", "!<", "!>", "!<=", "!=>", "notmem", "notmember", "notequal", "neq", "notin", "notlessthan", "notless", "nless", "leq", "geq", "notgreater" , "notgreaterthan", "about", "approx", "abt", "plusorminus", "porm", "pm", "subset", "sub", "natural", "real", "ints", "dd", "oo", "aa", "rr", "ll" "delta", "rightarrow", "leftarrow", "alpha", "omega", "vec", "member", "in", "mem", "!=", "nsubset", "notsubset", "nsub", "notsub", "!sub", ]
     buildString = ""
@@ -152,10 +153,17 @@ def logic(entered, enteredList):
 
 
 
-    elif entered == "matrix":
-        brackets = input("Should this matrix have brackets?: ")
-        if brackets != "y":
-            matrixType = "matrix"
+    elif entered in MATRICES:
+        if entered != "pm" and entered != "bm" and entered != "bmatrix" and entered != "pmatrix":
+            brackets = input("Should this matrix have brackets?: ")
+        else:
+            brackets = "n"
+        if entered == "pm" or entered == "pmatrix":
+            matrixType = "pmatrix"
+        elif entered == "bm" or entered == "bmatrix":
+            matrixType = "bmatrix"
+        else:
+           matrixType = "matrix"
         variableName = "!NONE"
         variable = input("Should this matrix be assigned to a variable? ")
         if variable == "y":
