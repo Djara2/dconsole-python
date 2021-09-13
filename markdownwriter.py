@@ -16,7 +16,7 @@ def result_statement(text):
     console.print("\n[bold green]Result:[/] {}".format(text))
     console.print("\n\"{}\" has been copied to the clipboard!\n".format(text))
 def logic(entered, enteredList):
-    PARAMETERS = ["-b", "-r", "-l", "-wsl"]
+    PARAMETERS = ["-b", "-r", "-l", "-wsl", "-w"]
     tempLen = len(PARAMETERS)
     for x in range(0, tempLen):
         PARAMETERS.append("-{}".format(PARAMETERS[x][1:len(PARAMETERS)-1].upper())) 
@@ -45,6 +45,10 @@ def logic(entered, enteredList):
             color = "yellow"
         elif color == "c":
             color = "cyan"
+        elif color == "o" or color == "orange":
+            color = "#ff7f24"
+        elif color == "op" or color == "peach":
+            color = "#ff7f50"
         if text[len(text)-1] == " ":
             text = text[0:len(text)-1]
         buildString = "<span style = \"color: {}\">{}</span>".format(color, text)
@@ -59,7 +63,7 @@ def logic(entered, enteredList):
             buildString = dtools.addToFront("**", buildString)
             buildString += "**"
         console.print("\n[bold green]Result:[/] {}".format(buildString))
-        if not "-wsl" in entered:
+        if not "-wsl" in entered and not "-w" in entered:
             if not "-l" in entered:
                 wsl = input("Are you on WSL?: ")
             else:
@@ -81,7 +85,7 @@ def logic(entered, enteredList):
                 buildString += "{}".format(enteredList[x])
                 if x != len(enteredList)-1:
                     buildString += " "
-        if not "-wsl" in entered:
+        if not "-wsl" in entered and not "-w" in entered:
             if not "-l" in entered:
                 wsl = input("Are you on WSL?: ")
             else:
@@ -131,6 +135,10 @@ def logic(entered, enteredList):
             color = "yellow"
         elif color == "c":
             color = "cyan"
+        elif color == "o":
+            color = "#ff7f24"
+        elif color == "op" or color == "peach":
+            color = "#ff7f50"
         if len(enteredList) < 2:
             text = input("Text to be stylized?: ")
         else:
